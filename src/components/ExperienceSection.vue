@@ -1,44 +1,86 @@
 <script setup>
 import { portfolioData } from '../data/portfolioData'
+
 const { experience } = portfolioData
 </script>
 
 <template>
-  <section id="experience" class="py-28 px-6 md:px-10 max-w-[1440px] mx-auto">
-    <hr class="section-divider mb-16 fade-in" />
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-      <div class="lg:col-span-3 fade-in">
-        <div class="eyebrow">/04 Work History</div>
-        <div class="w-8 h-px bg-[#c8ff00] mt-6"></div>
+  <section id="experience" class="py-24 px-6 md:px-10 max-w-7xl mx-auto">
+    <hr class="section-divider mb-16" />
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <!-- Left Column -->
+      <div class="lg:col-span-4 space-y-4">
+        <div class="eyebrow">/03 Work History</div>
+        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500"></div>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">
+          Commercial Experience
+        </h2>
+        <p class="text-sm font-mono text-slate-400 leading-relaxed">
+          Building production backend pipelines, asynchronous worker systems, and data-driven dashboards across fast-growing engineering teams.
+        </p>
       </div>
-      <div class="lg:col-span-9 space-y-0">
-        <div v-for="(exp, idx) in experience" :key="exp.company"
-          class="timeline-row group border-t border-white/[0.06] py-10 hover:border-[#c8ff00]/20 transition-colors duration-300 fade-in">
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-            <div class="md:col-span-2 flex items-center gap-3">
-              <div class="timeline-dot"></div>
-              <span class="font-mono text-xs text-[#6b6b6b]">0{{ idx + 1 }}</span>
+
+      <!-- Right Column: Experience Cards -->
+      <div class="lg:col-span-8 space-y-6">
+        <div
+          v-for="(exp, idx) in experience"
+          :key="exp.company"
+          class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 hover:border-cyan-500/40 transition-all space-y-5"
+        >
+          <!-- Top Row: Role, Company, Period -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-mono font-bold text-cyan-400">0{{ idx + 1 }}</span>
+                <h3 class="font-display font-bold text-xl text-white">
+                  {{ exp.role }}
+                </h3>
+              </div>
+              <div class="text-sm font-semibold text-cyan-300">
+                {{ exp.company }}
+              </div>
             </div>
-            <div class="md:col-span-3 space-y-1">
-              <div class="font-display font-bold text-sm text-[#f0ece3] group-hover:text-[#c8ff00] transition-colors">{{ exp.company }}</div>
-              <div class="font-mono text-xs text-[#6b6b6b]">{{ exp.period }}</div>
+            
+            <div class="flex flex-wrap sm:flex-col items-start sm:items-end gap-1 text-xs font-mono">
+              <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-200">
+                {{ exp.period }}
+              </span>
+              <span class="text-slate-400 text-[11px]">{{ exp.location }}</span>
             </div>
-            <div class="md:col-span-5 space-y-3">
-              <div class="text-sm font-semibold text-[#f0ece3]/80">{{ exp.role }}</div>
-              <ul class="space-y-1.5">
-                <li v-for="hl in exp.highlights.slice(0,3)" :key="hl" class="text-xs text-[#6b6b6b] leading-relaxed flex gap-2">
-                  <span class="text-[#c8ff00] mt-0.5 shrink-0">↳</span>
-                  <span>{{ hl }}</span>
-                </li>
-              </ul>
+          </div>
+
+          <!-- Description -->
+          <p class="text-sm text-slate-300 leading-relaxed">
+            {{ exp.description }}
+          </p>
+
+          <!-- Bullet Points Checklist -->
+          <div class="space-y-2.5">
+            <div
+              v-for="hl in exp.highlights"
+              :key="hl"
+              class="flex items-start gap-3 text-xs sm:text-sm text-slate-300 leading-relaxed"
+            >
+              <span class="text-cyan-400 shrink-0 mt-1">▸</span>
+              <span>{{ hl }}</span>
             </div>
-            <div class="md:col-span-2 flex flex-wrap gap-1 justify-start md:justify-end">
-              <span v-for="t in exp.technologies.slice(0,4)" :key="t"
-                class="text-[10px] font-mono text-[#6b6b6b] border border-white/[0.06] px-2 py-0.5">{{ t }}</span>
-            </div>
+          </div>
+
+          <!-- Technologies Tags -->
+          <div class="pt-4 border-t border-slate-800/80 flex flex-wrap gap-1.5">
+            <span
+              v-for="t in exp.technologies"
+              :key="t"
+              class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-900 text-slate-300 border border-slate-800"
+            >
+              {{ t }}
+            </span>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 </template>

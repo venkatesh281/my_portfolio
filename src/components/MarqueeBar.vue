@@ -1,23 +1,23 @@
 <script setup>
 const items = [
-  'Python', 'Django', 'Laravel', 'PHP', 'Vue.js 3',
-  'Celery', 'RabbitMQ', 'Redis', 'MySQL', 'Full Stack Developer',
-  'Technical Mentor', 'Backend APIs', 'REST', 'Async Architecture',
-  'Chennai', 'India', '85+ Students', 'CodeIgniter',
+  'Python', 'Django & DRF', 'Laravel', 'PHP', 'Vue.js 3',
+  'Celery Workers', 'RabbitMQ', 'Redis Caching', 'MySQL Indexing',
+  '85+ Students Mentored', 'Asynchronous Queues', 'Docker',
+  'Chennai, India', 'RESTful APIs', 'Flower Monitoring'
 ]
 const doubled = [...items, ...items]
 </script>
 
 <template>
-  <div class="marquee-wrapper py-4 my-10">
-    <div class="marquee-track gap-10">
+  <div class="marquee-wrapper py-3.5 my-8">
+    <div class="marquee-track">
       <span
         v-for="(item, i) in doubled"
         :key="i"
-        class="inline-flex items-center gap-5 text-xs font-mono uppercase tracking-widest text-[#6b6b6b] shrink-0"
+        class="inline-flex items-center gap-4 text-xs font-mono font-medium tracking-wider uppercase text-slate-400 shrink-0 hover:text-cyan-400 transition-colors"
       >
-        {{ item }}
-        <span class="text-[#c8ff00] text-lg leading-none">×</span>
+        <span>{{ item }}</span>
+        <span class="text-cyan-400 text-sm font-bold">◆</span>
       </span>
     </div>
   </div>

@@ -1,107 +1,195 @@
 <script setup>
-import { onMounted } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { portfolioData } from '../data/portfolioData'
-gsap.registerPlugin(ScrollTrigger)
 
-const { projects, education } = portfolioData
-
-onMounted(() => {
-  const track = document.getElementById('projects-track')
-  if (!track || window.innerWidth < 768) return
-  const pinSection = document.getElementById('projects-pin')
-  const totalWidth = track.scrollWidth - window.innerWidth
-  gsap.to(track, {
-    x: -totalWidth, ease: 'none',
-    scrollTrigger: {
-      trigger: pinSection, start: 'top top',
-      end: `+=${totalWidth}`, pin: true, scrub: 1.2,
-      anticipatePin: 1, invalidateOnRefresh: true,
-    }
-  })
-})
+const { projects, problemSolving, education } = portfolioData
 </script>
 
 <template>
-  <section id="projects" class="py-28">
-    <div class="px-6 md:px-10 max-w-[1440px] mx-auto mb-16">
-      <hr class="section-divider mb-16 fade-in" />
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div class="lg:col-span-3 fade-in">
-          <div class="eyebrow">/06 Projects</div>
-          <div class="w-8 h-px bg-[#c8ff00] mt-6"></div>
-        </div>
-        <div class="lg:col-span-6">
-          <div class="reveal-wrap">
-            <p class="inner font-display font-bold text-3xl md:text-4xl leading-tight tracking-tight text-[#f0ece3]">Selected Enterprise Work</p>
-          </div>
-          <p class="text-sm text-[#6b6b6b] mt-4 leading-relaxed fade-in">Production systems engineered for real clients. Client confidential — no live demos, but architecture runs in the wild.</p>
-        </div>
+  <section id="projects" class="py-24 px-6 md:px-10 max-w-7xl mx-auto">
+    <hr class="section-divider mb-16" />
+
+    <!-- Section Header -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-start">
+      <div class="lg:col-span-4 space-y-4">
+        <div class="eyebrow">/05 Selected Work</div>
+        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500"></div>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">
+          Enterprise Systems & Architectures
+        </h2>
+        <p class="text-sm font-mono text-slate-400 leading-relaxed">
+          Production software engineered for operational reliability, role-based workflows, and asynchronous background execution.
+        </p>
+      </div>
+
+      <div class="lg:col-span-8 flex flex-col justify-end">
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Client confidential platforms built for scale. Architected with strict MVC/MVT patterns, relational database normalization, and asynchronous workers.
+        </p>
       </div>
     </div>
 
-    <!-- Desktop horizontal scroll -->
-    <div id="projects-pin" class="hidden md:block h-screen overflow-hidden">
-      <div id="projects-track" class="flex gap-5 pl-10 pr-10 h-full items-center will-change-transform">
-        <div v-for="(proj, idx) in projects" :key="proj.title"
-          class="project-card min-w-[460px] max-w-[460px] h-[72vh] flex flex-col justify-between p-8 border border-white/[0.06] hover:border-[#c8ff00]/20 transition-all duration-500 group shrink-0"
-          data-hover>
+    <!-- Projects Grid (Reza GHZ Inspired Cards) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+      <div
+        v-for="(proj, idx) in projects"
+        :key="proj.title"
+        class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 hover:border-cyan-500/50 transition-all flex flex-col justify-between group shadow-xl"
+      >
+        <div class="space-y-5">
+          <!-- Top Row: Index & Category -->
           <div class="flex items-center justify-between">
-            <span class="project-index">0{{ idx + 1 }}</span>
-            <span class="text-[10px] font-mono text-[#6b6b6b] border border-white/[0.06] px-2 py-0.5">{{ proj.category }}</span>
-          </div>
-          <div class="space-y-3 py-6">
-            <h3 class="font-display font-bold text-3xl text-[#f0ece3] group-hover:text-[#c8ff00] transition-colors leading-tight">{{ proj.title }}</h3>
-            <p class="text-xs text-[#6b6b6b] leading-relaxed">{{ proj.description }}</p>
-          </div>
-          <div class="space-y-2 border-t border-white/[0.05] pt-5">
-            <div v-for="hl in proj.highlights" :key="hl" class="flex items-start gap-2 text-xs text-[#6b6b6b]">
-              <span class="text-[#c8ff00] shrink-0 mt-0.5">↳</span><span>{{ hl }}</span>
+            <span class="text-xs font-mono font-bold text-cyan-400">0{{ idx + 1 }}.</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-slate-900 border border-slate-700 text-slate-300">
+                {{ proj.category }}
+              </span>
+              <span
+                v-if="proj.isClientProject"
+                class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-amber-950/40 border border-amber-800/40 text-amber-300"
+              >
+                Client Confidential
+              </span>
+              <span
+                v-else
+                class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-950/40 border border-emerald-800/40 text-emerald-300"
+              >
+                Open Source
+              </span>
             </div>
           </div>
-          <div class="flex flex-wrap gap-1.5 mt-5 border-t border-white/[0.05] pt-5">
-            <span v-for="t in proj.tech.slice(0,5)" :key="t" class="text-[10px] font-mono text-[#6b6b6b] border border-white/[0.06] px-2 py-0.5">{{ t }}</span>
-            <a v-if="proj.github" :href="proj.github" target="_blank" class="ml-auto text-[10px] font-mono text-[#c8ff00] hover:underline" data-hover>→ GitHub</a>
+
+          <!-- Title & Context -->
+          <div>
+            <h3 class="font-display font-bold text-2xl text-white group-hover:text-cyan-300 transition-colors">
+              {{ proj.title }}
+            </h3>
+            <div class="text-xs font-mono text-slate-400 mt-1">
+              {{ proj.client }}
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            {{ proj.description }}
+          </p>
+
+          <!-- Key Deliverables -->
+          <div class="space-y-2 pt-2">
+            <div
+              v-for="hl in proj.highlights"
+              :key="hl"
+              class="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed"
+            >
+              <span class="text-cyan-400 shrink-0 mt-0.5">▸</span>
+              <span>{{ hl }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Tech Stack & Repository Link -->
+        <div class="pt-6 mt-6 border-t border-slate-800/80 space-y-4">
+          <div class="flex flex-wrap gap-1.5">
+            <span
+              v-for="t in proj.tech"
+              :key="t"
+              class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-900 text-slate-300 border border-slate-800"
+            >
+              {{ t }}
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <a
+              v-if="proj.github"
+              :href="proj.github"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              <span>{{ proj.github.includes('sonasi') ? 'View Mobile App Repository ↗' : (proj.github.includes('Student') ? 'View Spring MVC Repository ↗' : 'GitHub Profile ↗') }}</span>
+            </a>
+
+            <a
+              href="#contact"
+              class="text-xs font-mono text-slate-400 hover:text-white transition-colors ml-auto"
+            >
+              Inquire Details ↗
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Mobile vertical stack -->
-    <div class="md:hidden px-6 space-y-4">
-      <div v-for="(proj, idx) in projects" :key="proj.title"
-        class="project-card border border-white/[0.06] p-6 space-y-4 group fade-in">
+    <!-- Problem Solving & Education Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
+      
+      <!-- Problem Solving Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 hover:border-cyan-500/30 transition-all space-y-5">
         <div class="flex items-center justify-between">
-          <span class="project-index">0{{ idx + 1 }}</span>
-          <span class="text-[10px] font-mono text-[#6b6b6b]">{{ proj.category }}</span>
+          <span class="eyebrow">Problem Solving</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/60 text-emerald-300 font-mono font-bold text-xs">
+            HackerRank Verified
+          </span>
         </div>
-        <h3 class="font-display font-bold text-xl text-[#f0ece3]">{{ proj.title }}</h3>
-        <p class="text-xs text-[#6b6b6b] leading-relaxed">{{ proj.description }}</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span v-for="t in proj.tech.slice(0,4)" :key="t" class="text-[10px] font-mono text-[#6b6b6b] border border-white/[0.06] px-2 py-0.5">{{ t }}</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Education + Problem Solving -->
-    <div class="px-6 md:px-10 max-w-[1440px] mx-auto mt-24">
-      <hr class="section-divider mb-16 fade-in" />
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 stagger-children">
-        <div class="border border-white/[0.06] p-8 hover:border-[#c8ff00]/20 transition-colors duration-300">
-          <div class="eyebrow mb-4">HackerRank</div>
-          <div class="font-display font-bold text-5xl text-[#c8ff00] leading-none mb-2">200+</div>
-          <div class="text-sm text-[#f0ece3]/70 mb-4">Algorithm & Data Structure problems solved</div>
-          <div class="font-mono text-xs text-[#6b6b6b]">Java · Python · DSA · OOP · SOLID</div>
+        <div>
+          <div class="font-display font-extrabold text-4xl sm:text-5xl text-emerald-400 leading-none mb-2">
+            200+
+          </div>
+          <div class="text-sm font-bold text-white">
+            Algorithms & Data Structure Problems Solved
+          </div>
+          <div class="text-xs font-mono text-slate-400 mt-1">
+            Implemented in Java & Python
+          </div>
         </div>
-        <div class="border border-white/[0.06] p-8 hover:border-[#c8ff00]/20 transition-colors duration-300 space-y-5">
-          <div class="eyebrow mb-4">Education</div>
-          <div v-for="edu in education" :key="edu.degree" class="border-t border-white/[0.05] pt-4">
-            <div class="text-sm font-semibold text-[#f0ece3]">{{ edu.degree }}</div>
-            <div class="text-xs text-[#6b6b6b] mt-1">{{ edu.institution }} · {{ edu.period }}</div>
+
+        <div class="space-y-2 pt-2">
+          <div
+            v-for="topic in problemSolving.topics"
+            :key="topic"
+            class="flex items-start gap-2 text-xs text-slate-300 leading-relaxed"
+          >
+            <span class="text-emerald-400 shrink-0">✓</span>
+            <span>{{ topic }}</span>
           </div>
         </div>
       </div>
+
+      <!-- Education Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 hover:border-cyan-500/30 transition-all space-y-5 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="eyebrow">Academic Background</div>
+          <h3 class="font-display font-bold text-xl text-white">
+            Formal Degrees
+          </h3>
+
+          <div class="space-y-4 pt-1">
+            <div
+              v-for="edu in education"
+              :key="edu.degree"
+              class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1"
+            >
+              <div class="flex items-center justify-between text-xs font-mono text-cyan-400">
+                <span>{{ edu.period }}</span>
+                <span class="px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">Score: {{ edu.score }}</span>
+              </div>
+              <div class="text-sm font-bold text-white">
+                {{ edu.degree }}
+              </div>
+              <div class="text-xs text-slate-400">
+                {{ edu.institution }} • {{ edu.location }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-xs font-mono text-slate-400 pt-3 border-t border-slate-800">
+          Strong theoretical foundations in Algorithms, Database Normalization, and Distributed Systems.
+        </div>
+      </div>
+
     </div>
+
   </section>
 </template>

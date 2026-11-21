@@ -1,54 +1,59 @@
 <script setup>
-import { X } from 'lucide-vue-next'
+const props = defineProps({
+  photo: Object,
+  isOpen: Boolean
+})
 
-const props = defineProps({ photo: Object, isOpen: Boolean })
 const emit = defineEmits(['close'])
 </script>
 
 <template>
   <Teleport to="body">
-    <transition
-      enter-active-class="transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
-      leave-active-class="transition-all duration-300 ease-in"
-      enter-from-class="opacity-0 scale-95"
-      leave-to-class="opacity-0 scale-95"
+    <div
+      v-if="isOpen && photo"
+      class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-md"
+      @click.self="emit('close')"
     >
-      <div
-        v-if="isOpen && photo"
-        class="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-black/92 backdrop-blur-sm"
-        @click.self="emit('close')"
-      >
-        <div class="relative max-w-5xl w-full bg-[#0d0d0d] border border-white/[0.08]">
+      <div class="relative max-w-4xl w-full bg-[#0d1321] border border-slate-700/80 rounded-3xl overflow-hidden shadow-2xl">
+        
+        <!-- Close Button -->
+        <button
+          @click="emit('close')"
+          class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 flex items-center justify-center transition-all"
+          aria-label="Close Lightbox"
+        >
+          ✕
+        </button>
 
-          <!-- Close -->
-          <button
-            @click="emit('close')"
-            class="absolute top-4 right-4 z-10 w-9 h-9 border border-white/[0.1] flex items-center justify-center text-[#6b6b6b] hover:text-[#c8ff00] hover:border-[#c8ff00]/30 transition-colors"
-            data-hover
-            aria-label="Close"
-          >
-            <X class="w-4 h-4" />
-          </button>
-
-          <!-- Image -->
+        <!-- Image Canvas -->
+        <div class="max-h-[72vh] overflow-hidden flex items-center justify-center bg-black/60">
           <img
             :src="photo.src"
             :alt="photo.caption"
-            class="w-full max-h-[75vh] object-contain"
+            class="max-h-[72vh] w-auto max-w-full object-contain"
           />
-
-          <!-- Caption -->
-          <div class="border-t border-white/[0.06] p-5 flex items-center justify-between gap-4">
-            <div>
-              <span class="mentor-badge mb-2 inline-flex">{{ photo.tag }}</span>
-              <p class="text-xs text-[#6b6b6b] leading-relaxed">{{ photo.caption }}</p>
-            </div>
-            <button @click="emit('close')" class="btn-pill text-xs shrink-0" data-hover>
-              <span>Close</span>
-            </button>
-          </div>
         </div>
+
+        <!-- Caption Footer -->
+        <div class="p-6 border-t border-slate-800 bg-[#0d1321] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40 inline-block mb-1.5">
+              {{ photo.tag }}
+            </span>
+            <p class="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed">
+              {{ photo.caption }}
+            </p>
+          </div>
+
+          <button
+            @click="emit('close')"
+            class="btn-pill text-xs font-mono shrink-0"
+          >
+            Close
+          </button>
+        </div>
+
       </div>
-    </transition>
+    </div>
   </Teleport>
 </template>
