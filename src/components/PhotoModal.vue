@@ -1,56 +1,54 @@
 <script setup>
-import { X, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { X } from 'lucide-vue-next'
 
-const props = defineProps({
-  photo: Object,
-  isOpen: Boolean
-})
-
+const props = defineProps({ photo: Object, isOpen: Boolean })
 const emit = defineEmits(['close'])
 </script>
 
 <template>
-  <div
-    v-if="isOpen && photo"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-200"
-    @click.self="emit('close')"
-  >
-    <div class="relative max-w-4xl w-full glass-panel rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
-      <!-- Close Button -->
-      <button
-        @click="emit('close')"
-        aria-label="Close Lightbox"
-        class="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+  <Teleport to="body">
+    <transition
+      enter-active-class="transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      leave-active-class="transition-all duration-300 ease-in"
+      enter-from-class="opacity-0 scale-95"
+      leave-to-class="opacity-0 scale-95"
+    >
+      <div
+        v-if="isOpen && photo"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-black/92 backdrop-blur-sm"
+        @click.self="emit('close')"
       >
-        <X class="w-5 h-5" />
-      </button>
+        <div class="relative max-w-5xl w-full bg-[#0d0d0d] border border-white/[0.08]">
 
-      <!-- Image Area -->
-      <div class="max-h-[75vh] overflow-hidden flex items-center justify-center bg-black/60">
-        <img
-          :src="photo.src"
-          :alt="photo.caption"
-          class="max-h-[75vh] w-auto max-w-full object-contain"
-        />
-      </div>
+          <!-- Close -->
+          <button
+            @click="emit('close')"
+            class="absolute top-4 right-4 z-10 w-9 h-9 border border-white/[0.1] flex items-center justify-center text-[#6b6b6b] hover:text-[#c8ff00] hover:border-[#c8ff00]/30 transition-colors"
+            data-hover
+            aria-label="Close"
+          >
+            <X class="w-4 h-4" />
+          </button>
 
-      <!-- Caption & Details -->
-      <div class="p-6 bg-slate-900/90 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
-          <span class="inline-block text-xs font-mono font-bold text-accent-cyan px-2.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/50 mb-1.5">
-            {{ photo.tag }}
-          </span>
-          <p class="text-sm font-medium text-white leading-relaxed">
-            {{ photo.caption }}
-          </p>
+          <!-- Image -->
+          <img
+            :src="photo.src"
+            :alt="photo.caption"
+            class="w-full max-h-[75vh] object-contain"
+          />
+
+          <!-- Caption -->
+          <div class="border-t border-white/[0.06] p-5 flex items-center justify-between gap-4">
+            <div>
+              <span class="mentor-badge mb-2 inline-flex">{{ photo.tag }}</span>
+              <p class="text-xs text-[#6b6b6b] leading-relaxed">{{ photo.caption }}</p>
+            </div>
+            <button @click="emit('close')" class="btn-pill text-xs shrink-0" data-hover>
+              <span>Close</span>
+            </button>
+          </div>
         </div>
-        <button
-          @click="emit('close')"
-          class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-        >
-          Back to Portfolio
-        </button>
       </div>
-    </div>
-  </div>
+    </transition>
+  </Teleport>
 </template>

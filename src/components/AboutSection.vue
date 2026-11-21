@@ -1,81 +1,50 @@
 <script setup>
 import { portfolioData } from '../data/portfolioData'
-import { Zap, Layers, Database, GraduationCap, CheckCircle } from 'lucide-vue-next'
-
-const iconMap = {
-  Zap,
-  Layers,
-  Database,
-  GraduationCap
-}
-
-const about = portfolioData.about
+const { about } = portfolioData
 </script>
 
 <template>
-  <section id="about" class="py-20 md:py-28 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/60 border border-brand-800/50 text-brand-400 text-xs font-semibold uppercase tracking-wider">
-          About Me
-        </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Engineering Resilient Systems & Fostering Talent
-        </h2>
-        <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
-          {{ about.summary }}
-        </p>
+  <section id="about" class="py-28 px-6 md:px-10 max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      <div class="lg:col-span-3 space-y-6 fade-in">
+        <div class="eyebrow">/02 About</div>
+        <div class="w-8 h-px bg-[#c8ff00]"></div>
+        <div class="eyebrow text-[#f0ece3]/30 leading-loose">A developer who codes<br>and also teaches.</div>
       </div>
-
-      <!-- Philosophy Pillars Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div
-          v-for="(item, idx) in about.philosophy"
-          :key="idx"
-          class="glass-card rounded-2xl p-6 border border-slate-800/70 hover:border-brand-500/50 hover:shadow-brand-500/10 hover:shadow-2xl transition-all duration-300 space-y-4 group"
-        >
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-900/60 to-indigo-900/40 border border-brand-700/40 flex items-center justify-center text-brand-300 group-hover:scale-110 transition-transform">
-            <component :is="iconMap[item.icon]" class="w-6 h-6" />
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors">
-            {{ item.title }}
-          </h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            {{ item.description }}
+      <div class="lg:col-span-9 space-y-16">
+        <div class="reveal-wrap">
+          <p class="inner font-display font-bold text-2xl sm:text-3xl md:text-4xl leading-[1.2] text-[#f0ece3] tracking-tight">
+            I build backend systems that scale, front-ends that feel alive, and train the engineers who come next.
           </p>
         </div>
-      </div>
-
-      <!-- Quick Facts Banner -->
-      <div class="mt-12 glass-panel rounded-2xl p-6 md:p-8 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="space-y-1 text-center md:text-left">
-          <div class="text-base font-bold text-white">
-            Looking for a Full Stack Engineer who delivers end-to-end?
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 stagger-children">
+          <div class="space-y-4">
+            <p class="text-sm text-[#6b6b6b] leading-relaxed">{{ about.summary }}</p>
           </div>
-          <div class="text-sm text-slate-400">
-            From database schemas & queue workers to responsive Vue 3 components and cloud deployment.
+          <div class="space-y-5">
+            <div v-for="item in about.philosophy" :key="item.title"
+              class="border-b border-white/[0.05] pb-4 group">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-display font-semibold text-[#f0ece3] group-hover:text-[#c8ff00] transition-colors">{{ item.title }}</span>
+                <span class="text-[#c8ff00] text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+              </div>
+              <p class="text-xs text-[#6b6b6b] leading-relaxed">{{ item.description }}</p>
+            </div>
           </div>
         </div>
-        <div class="flex items-center gap-3 shrink-0">
-          <a
-            href="#contact"
-            class="px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-brand-600 hover:bg-brand-500 transition-all shadow-md shadow-brand-500/20"
-          >
-            Start a Conversation
-          </a>
-          <a
-            href="https://www.linkedin.com/in/venkateshwaran28"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-4 py-2.5 rounded-xl font-semibold text-xs text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 transition-all"
-          >
-            LinkedIn Profile
-          </a>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 stagger-children">
+          <div v-for="stat in portfolioData.stats" :key="stat.label"
+            class="border border-white/[0.06] p-6 hover:border-[#c8ff00]/30 transition-colors duration-300">
+            <div class="font-display font-bold text-4xl text-[#c8ff00] leading-none mb-2">{{ stat.value }}</div>
+            <div class="text-xs text-[#6b6b6b] leading-snug">{{ stat.label }}</div>
+          </div>
         </div>
       </div>
-
     </div>
   </section>
 </template>
+
+<script>
+import { portfolioData } from '../data/portfolioData'
+export default { setup() { return { portfolioData } } }
+</script>

@@ -1,181 +1,103 @@
 <script setup>
+import { onMounted } from 'vue'
+import { gsap } from 'gsap'
 import { portfolioData } from '../data/portfolioData'
-import { 
-  ArrowUpRight, 
-  Download, 
-  MapPin, 
-  Mail, 
-  Phone, 
-  Linkedin, 
-  Github, 
-  Sparkles, 
-  CheckCircle2,
-  ExternalLink,
-  MessageSquare
-} from 'lucide-vue-next'
 
 const p = portfolioData.personal
 
-const copyEmail = () => {
-  navigator.clipboard.writeText(p.email)
-  alert('Email copied to clipboard: ' + p.email)
-}
+onMounted(() => {
+  gsap.fromTo('.hero-word', { y: '110%', opacity: 0 },
+    { y: '0%', opacity: 1, duration: 1.2, ease: 'expo.out', stagger: 0.08, delay: 0.1 })
+  gsap.fromTo('.hero-sub', { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.07, delay: 0.9 })
+  gsap.fromTo('.hero-actions', { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: 'expo.out', delay: 1.15 })
+  gsap.fromTo('.hero-photo-wrap', { opacity: 0, scale: 0.95, x: 40 },
+    { opacity: 1, scale: 1, x: 0, duration: 1.4, ease: 'expo.out', delay: 0.4 })
+  gsap.fromTo('.hero-floats > *', { opacity: 0, y: 12 },
+    { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.12, delay: 1.3 })
+})
 </script>
 
 <template>
-  <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-ambient-glow">
-    <!-- Glow Gradients -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-1/3 right-10 w-72 h-72 bg-accent-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+  <section class="relative min-h-screen flex flex-col justify-end pb-16 pt-32 px-6 md:px-10 overflow-hidden">
+    <!-- Status bar top -->
+    <div class="absolute top-28 left-6 md:left-10 flex items-center gap-2 z-10 hero-sub">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse"></span>
+      <span class="eyebrow">Available for opportunities</span>
+      <span class="text-[#2a2a2a] mx-1">·</span>
+      <span class="eyebrow">Chennai, India</span>
+    </div>
+    <div class="absolute top-28 right-6 md:right-10 text-right z-10 hero-sub">
+      <div class="eyebrow">Full Stack Developer</div>
+      <div class="eyebrow">2024 — Present</div>
+    </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        
-        <!-- Left Column: Bio & Value Proposition -->
-        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-          
-          <!-- Status Pill -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs text-slate-300 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="font-medium">{{ p.statusBadge }}</span>
-            <span class="text-slate-600">•</span>
-            <span class="text-slate-400 flex items-center gap-1">
-              <MapPin class="w-3 h-3 text-brand-400" /> {{ p.location }}
-            </span>
-          </div>
-
-          <!-- Headline -->
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
-            Hi, I'm <span class="text-gradient">{{ p.name }}</span>
-            <br />
-            <span class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-300">
-              Full Stack Developer & Technical Mentor
-            </span>
-          </h1>
-
-          <!-- Tagline -->
-          <p class="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
-            Specializing in high-performance backend APIs (<span class="text-slate-200 font-semibold">Python / Django</span> & <span class="text-slate-200 font-semibold">PHP / Laravel</span>), scalable background task pipelines (<span class="text-slate-200 font-semibold">Celery + RabbitMQ + Redis</span>), and responsive frontend dashboards with <span class="text-slate-200 font-semibold">Vue.js 3</span>.
-          </p>
-
-          <!-- Core Value Badges -->
-          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 text-xs">
-            <span class="px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-              <CheckCircle2 class="w-3.5 h-3.5 text-brand-400" /> Asynchronous Architecture
-            </span>
-            <span class="px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-              <CheckCircle2 class="w-3.5 h-3.5 text-accent-cyan" /> 85+ Students Mentored
-            </span>
-            <span class="px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-              <CheckCircle2 class="w-3.5 h-3.5 text-accent-emerald" /> 200+ HackerRank Solved
-            </span>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-            <a
-              href="#projects"
-              class="px-6 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-2"
-            >
-              <span>Explore Projects</span>
-              <ArrowUpRight class="w-4 h-4" />
-            </a>
-
-            <a
-              href="#mentorship"
-              class="px-6 py-3 rounded-xl font-semibold text-sm text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 transition-all duration-200 flex items-center gap-2"
-            >
-              <Sparkles class="w-4 h-4 text-accent-cyan" />
-              <span>Mentorship Journey</span>
-            </a>
-
-            <a
-              :href="p.whatsapp"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-4 py-3 rounded-xl font-semibold text-sm text-emerald-400 bg-emerald-950/30 hover:bg-emerald-900/40 border border-emerald-800/40 transition-all duration-200 flex items-center gap-2"
-            >
-              <MessageSquare class="w-4 h-4" />
-              <span>WhatsApp Me</span>
-            </a>
-          </div>
-
-          <!-- Social Quick Links -->
-          <div class="flex items-center justify-center lg:justify-start gap-3 pt-3 text-slate-400">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Connect:</span>
-            <a
-              :href="p.linkedin"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-              class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-brand-400 hover:border-brand-500/50 hover:bg-slate-800 transition-all"
-            >
-              <Linkedin class="w-4 h-4" />
-            </a>
-            <a
-              :href="p.github"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-              class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-brand-400 hover:border-brand-500/50 hover:bg-slate-800 transition-all"
-            >
-              <Github class="w-4 h-4" />
-            </a>
-            <button
-              @click="copyEmail"
-              title="Click to copy email"
-              class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-brand-400 hover:border-brand-500/50 hover:bg-slate-800 transition-all"
-            >
-              <Mail class="w-4 h-4" />
-            </button>
-          </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 items-end gap-8 max-w-[1440px] mx-auto w-full">
+      <!-- Left: Title -->
+      <div class="lg:col-span-7 space-y-6 pb-4">
+        <div class="hero-title">
+          <div class="reveal-wrap"><span class="inner hero-word block">VENKAT</span></div>
+          <div class="reveal-wrap"><span class="inner hero-word block">ESHWARAN<span class="acid">.</span></span></div>
         </div>
-
-        <!-- Right Column: Profile Visual Card -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="relative group">
-            
-            <!-- Outer Glow Rings -->
-            <div class="absolute -inset-1.5 bg-gradient-to-tr from-brand-600 via-indigo-500 to-accent-cyan rounded-3xl blur-lg opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse-slow"></div>
-            
-            <!-- Card Wrapper -->
-            <div class="relative rounded-3xl bg-slate-900 border border-slate-800 p-3 shadow-2xl">
-              <!-- Portrait Image -->
-              <div class="overflow-hidden rounded-2xl aspect-[4/5] max-w-xs sm:max-w-sm">
-                <img
-                  :src="p.avatar"
-                  :alt="p.name"
-                  class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              <!-- Floating Experience Pill -->
-              <div class="absolute -bottom-4 -left-4 glass-panel rounded-2xl p-3 border border-slate-700/80 shadow-2xl flex items-center gap-3 animate-float">
-                <div class="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 flex items-center justify-center text-brand-400 font-extrabold text-sm">
-                  2+
-                </div>
-                <div>
-                  <div class="text-xs font-bold text-white">Years Experience</div>
-                  <div class="text-[10px] text-slate-400">Full Stack Engineering</div>
-                </div>
-              </div>
-
-              <!-- Floating Mentorship Pill -->
-              <div class="absolute -top-3 -right-3 glass-panel rounded-2xl p-2.5 border border-slate-700/80 shadow-2xl flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-accent-cyan font-extrabold text-xs">
-                  85+
-                </div>
-                <div>
-                  <div class="text-[11px] font-bold text-white">Trained Interns</div>
-                  <div class="text-[9px] text-slate-400">Digisailor & GES Partner</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+        <div class="flex flex-wrap items-center gap-3 hero-sub">
+          <span class="eyebrow">/01</span>
+          <span class="eyebrow text-[#f0ece3]/60">Full Stack & Async Systems Engineer</span>
+          <span class="mentor-badge">
+            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+            85+ Students Mentored
+          </span>
         </div>
-
+        <p class="text-[#6b6b6b] text-sm leading-relaxed max-w-sm hero-sub">
+          Architecting high-throughput backend APIs, Celery + RabbitMQ queue pipelines, and responsive Vue.js 3 frontends — with a parallel passion for training the next generation of engineers.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 hero-actions">
+          <button class="btn-pill solid text-sm" data-hover onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">
+            <span>View Work</span>
+            <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <a :href="p.whatsapp" target="_blank" rel="noopener noreferrer" class="btn-pill text-sm" data-hover>
+            <span>WhatsApp Me</span>
+          </a>
+          <a :href="p.linkedin" target="_blank" rel="noopener noreferrer" class="btn-pill text-sm" data-hover>
+            <span>LinkedIn</span>
+          </a>
+        </div>
       </div>
+
+      <!-- Right: Photo -->
+      <div class="lg:col-span-5 flex items-end justify-center lg:justify-end">
+        <div class="hero-photo-wrap relative">
+          <div class="relative w-[280px] sm:w-[360px] h-[380px] sm:h-[460px] overflow-hidden">
+            <div class="absolute inset-0 border border-white/[0.08] z-10 pointer-events-none"></div>
+            <img :src="p.avatar" :alt="p.name"
+              class="w-full h-full object-cover object-top grayscale-[20%] hover:grayscale-0 transition-all duration-700 scale-[1.02] hover:scale-100" />
+            <div class="absolute inset-0 mix-blend-overlay opacity-30"
+              style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E'); background-size: 120px;">
+            </div>
+          </div>
+          <div class="hero-floats absolute -bottom-6 -left-8 flex flex-col gap-2">
+            <div class="flex items-center gap-2 bg-[#111] border border-white/[0.08] px-3 py-2 text-xs font-mono backdrop-blur">
+              <span class="text-[#c8ff00] font-bold">2+</span>
+              <span class="text-[#6b6b6b]">yrs engineering</span>
+            </div>
+            <div class="flex items-center gap-2 bg-[#111] border border-white/[0.08] px-3 py-2 text-xs font-mono backdrop-blur">
+              <span class="text-[#c8ff00] font-bold">200+</span>
+              <span class="text-[#6b6b6b]">problems solved</span>
+            </div>
+          </div>
+          <div class="absolute -top-3 right-0 flex items-center gap-1.5 hero-floats">
+            <span class="eyebrow">Digisailor × GES</span>
+            <span class="w-1 h-1 rounded-full bg-[#c8ff00]"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hero-sub opacity-40">
+      <div class="w-px h-10 bg-gradient-to-b from-[#f0ece3] to-transparent animate-bounce"></div>
+      <span class="eyebrow">scroll</span>
     </div>
   </section>
 </template>
