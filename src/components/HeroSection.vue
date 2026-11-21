@@ -125,67 +125,44 @@ const scrollTo = (id) => {
 
       </div>
 
-      <!-- Right Column: Prominent Cutout Visual with Ambient Glow -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end">
-        <div class="relative w-full max-w-[340px] sm:max-w-[370px]">
-          
-          <!-- Outer Ambient Glows -->
-          <div class="absolute -top-10 -left-10 w-64 h-64 bg-cyan-500/25 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-          <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-indigo-600/25 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+      <!-- Right Column: Borderless Blend & Glassmorphic Hero Visual -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center relative select-none">
+        
+        <!-- Ambient Glowing Aura (Behind Cutout, Soft Radial Studio Lighting) -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[420px] h-[340px] sm:h-[420px] bg-gradient-to-tr from-cyan-500/20 via-blue-600/25 to-indigo-600/20 rounded-full blur-[90px] pointer-events-none -z-10"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] bg-cyan-400/20 rounded-full blur-[65px] pointer-events-none -z-10"></div>
 
-          <!-- The Pedestal Card (Rounded & Ambient) -->
-          <div class="relative rounded-3xl bg-gradient-to-b from-[#131b2e] via-[#0d1424] to-[#080c14] border border-slate-700/80 p-2 shadow-2xl overflow-hidden group">
-            
-            <!-- Interior Glow Arc -->
-            <div class="absolute -top-16 inset-x-0 h-40 bg-gradient-to-b from-cyan-500/20 to-transparent blur-xl pointer-events-none"></div>
-            
-            <!-- Cutout Frame -->
-            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-gradient-to-b from-slate-900/60 via-slate-950/80 to-[#080c14] flex items-end justify-center">
-              
-              <!-- Subtle Background Light Disc behind Venkat -->
-              <div class="absolute top-1/4 w-48 h-48 bg-gradient-to-tr from-cyan-400/20 via-indigo-500/20 to-transparent rounded-full blur-2xl pointer-events-none"></div>
-
-              <!-- Venkateshwaran's Cutout Portrait - Bold, Clear, Prominent -->
-              <img
-                :src="p.avatar"
-                :alt="p.name"
-                class="relative z-10 w-full h-auto max-h-[96%] object-contain object-bottom group-hover:scale-105 transition-transform duration-700 drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)]"
-              />
-
-              <!-- Subtle bottom fade for seamless blend -->
-              <div class="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-[#080c14] to-transparent z-15 pointer-events-none"></div>
-            </div>
-
-            <!-- Bottom Experience Badge -->
-            <div class="p-3 bg-[#0d1424]/90 border-t border-white/[0.06] flex items-center justify-between">
-              <div>
-                <div class="text-xs font-bold text-white font-mono">
-                  Full Stack Engineer
-                </div>
-                <div class="text-[11px] text-slate-400 font-mono">
-                  visu.ai • Geometriccae
-                </div>
-              </div>
-              <div class="px-2.5 py-1 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 font-mono font-bold text-xs">
-                2+ Yrs Exp
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Floating Tech Badge 1 (Top Left) -->
-          <div class="absolute -top-3.5 -left-4 glass-panel rounded-xl px-3 py-1.5 border border-white/[0.12] shadow-xl flex items-center gap-2 z-20">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            <span class="text-[11px] font-mono font-bold text-white">Python & Django</span>
-          </div>
-
-          <!-- Floating Tech Badge 2 (Right Side) -->
-          <div class="absolute top-1/3 -right-4 glass-panel rounded-xl px-3 py-1.5 border border-white/[0.12] shadow-xl flex items-center gap-1.5 z-20">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span class="text-[11px] font-mono font-bold text-slate-200">Celery + Redis</span>
-          </div>
-
+        <!-- The Portrait Cutout - 100% Borderless, Floating Directly on Canvas with Soft Gradient Fade -->
+        <div class="relative w-full max-w-[340px] sm:max-w-[390px] lg:max-w-[420px] flex justify-center group">
+          <img
+            :src="p.avatar"
+            :alt="p.name"
+            class="relative z-10 w-full h-auto object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.85)] group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+            style="mask-image: linear-gradient(to bottom, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%);"
+          />
         </div>
+
+        <!-- Frosted Glassmorphism Badge (Cleanly Positioned Beneath the Fade with ZERO Body Overlap) -->
+        <div class="relative z-20 mt-2 w-full max-w-[320px] sm:max-w-[360px] rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-white/10 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between hover:border-cyan-500/40 hover:bg-slate-900/60 transition-all duration-300">
+          <div class="flex items-center gap-3">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+            </span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono leading-tight">
+                Full Stack Developer
+              </div>
+              <div class="text-[11px] text-slate-400 font-mono">
+                visu.ai • Geometriccae
+              </div>
+            </div>
+          </div>
+          <div class="px-2.5 py-1 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono font-bold text-xs tracking-wide">
+            2+ Yrs Exp
+          </div>
+        </div>
+
       </div>
 
     </div>
