@@ -134,14 +134,14 @@ const scrollTo = (id) => {
 
           <!-- Main Portrait Card -->
           <div class="relative rounded-3xl bg-[#0d1321] border border-slate-700/80 p-3 shadow-2xl overflow-hidden">
-            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] w-[270px] sm:w-[320px]">
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] w-[270px] sm:w-[320px] bg-gradient-to-b from-indigo-950/60 via-slate-900/90 to-[#080c14] flex items-end justify-center">
               <img
                 :src="p.avatar"
                 :alt="p.name"
-                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                class="w-full h-full object-contain object-bottom pt-4 group-hover:scale-105 transition-transform duration-700 drop-shadow-[0_16px_24px_rgba(0,0,0,0.7)]"
               />
-              <!-- Subtle vignette gradient -->
-              <div class="absolute inset-0 bg-gradient-to-t from-[#080c14]/80 via-transparent to-transparent"></div>
+              <!-- Subtle vignette gradient at bottom -->
+              <div class="absolute inset-0 bg-gradient-to-t from-[#080c14]/90 via-transparent to-transparent pointer-events-none"></div>
             </div>
 
             <!-- Floating Experience Pill -->
@@ -153,12 +153,6 @@ const scrollTo = (id) => {
               <div class="px-2.5 py-1 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 font-mono font-bold text-xs">
                 2+ Yrs
               </div>
-            </div>
-
-            <!-- Top Corner Badge -->
-            <div class="absolute top-6 right-6 glass-panel rounded-full px-3 py-1 border border-white/[0.1] text-[10px] font-mono text-cyan-300 flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span>Digisailor Mentor</span>
             </div>
           </div>
 

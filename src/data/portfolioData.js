@@ -11,7 +11,7 @@ export const portfolioData = {
     linkedin: "https://www.linkedin.com/in/venkateshwaran28",
     github: "https://github.com/venkatesh281",
     resume: "/resume.html",
-    avatar: "/images/profile.jpg",
+    avatar: "/images/profile.png",
     statusBadge: "Available for Full Stack Opportunities",
     yearsExperience: "2+",
     studentsMentored: "85+",
