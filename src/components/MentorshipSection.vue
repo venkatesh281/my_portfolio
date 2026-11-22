@@ -13,20 +13,19 @@ const m = portfolioData.mentorship
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-start">
       <div class="lg:col-span-4 space-y-4">
         <div class="eyebrow">/04 Mentorship Spotlight</div>
-        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500"></div>
         <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">
           Empowering the Next Generation
         </h2>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono">
-          <span>★ 85+ Students Trained & Certified</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-800/50 text-cyan-300 text-xs font-mono">
+          <span class="tabular-nums font-bold">85+</span> Students Trained &amp; Certified
         </div>
       </div>
 
-      <div class="lg:col-span-8 space-y-4">
+      <div class="lg:col-span-8 space-y-3">
         <h3 class="font-display font-bold text-xl sm:text-2xl text-white">
           {{ m.headline }}
         </h3>
-        <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+        <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
           {{ m.description }}
         </p>
       </div>
@@ -38,23 +37,23 @@ const m = portfolioData.mentorship
       <!-- Certificate Feature Card -->
       <div
         @click="$emit('openPhoto', m.gallery[0])"
-        class="lg:col-span-5 glass-panel rounded-3xl overflow-hidden border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group shadow-xl flex flex-col justify-between"
+        class="lg:col-span-5 glass-panel rounded-2xl overflow-hidden border border-white/[0.08] hover:border-cyan-500/40 transition-colors cursor-pointer group shadow-xl flex flex-col justify-between"
       >
         <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
           <img
             :src="m.gallery[0].src"
             :alt="m.gallery[0].caption"
-            class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-[#0d1321] via-transparent to-transparent"></div>
-          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 backdrop-blur border border-white/[0.1] text-xs font-mono text-cyan-300 flex items-center gap-1.5">
+          <div class="absolute top-3.5 right-3.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur border border-white/[0.1] text-xs font-mono text-cyan-300 flex items-center gap-1.5 whitespace-nowrap">
             <span>Click to Expand</span>
             <span>↗</span>
           </div>
         </div>
 
         <div class="p-6 space-y-2 bg-[#0d1321]">
-          <span class="text-xs font-mono font-bold text-cyan-400">Award & Honor</span>
+          <span class="text-xs font-mono font-bold text-cyan-400">Award &amp; Honor</span>
           <h4 class="font-display font-bold text-lg text-white">
             Certificate of Appreciation
           </h4>
@@ -65,7 +64,7 @@ const m = portfolioData.mentorship
       </div>
 
       <!-- Curriculum & Topics Covered -->
-      <div class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+      <div class="lg:col-span-7 glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] space-y-6">
         <div>
           <span class="text-xs font-mono uppercase tracking-wider text-cyan-400">Guest Lecture Seminar</span>
           <h4 class="font-display font-bold text-lg text-white mt-1">
@@ -100,13 +99,13 @@ const m = portfolioData.mentorship
 
     </div>
 
-    <!-- Photo Sessions Gallery -->
+    <!-- Photo Sessions Gallery (Interactive Lightbox Trigger) -->
     <div class="space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <h4 class="font-display font-bold text-lg text-white">
-          On-Campus Training & Live Coding Labs
+          On-Campus Training &amp; Live Coding Labs
         </h4>
-        <span class="text-xs font-mono text-cyan-400">Click any photo for lightbox preview</span>
+        <span class="text-xs font-mono text-slate-400">Click any photo for high-res lightbox preview</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -114,23 +113,23 @@ const m = portfolioData.mentorship
           v-for="(photo, idx) in m.gallery.slice(1)"
           :key="idx"
           @click="$emit('openPhoto', photo)"
-          class="glass-panel rounded-2xl overflow-hidden border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group shadow-md"
+          class="glass-panel rounded-xl overflow-hidden border border-white/[0.08] hover:border-cyan-500/40 transition-colors cursor-pointer group shadow-sm"
         >
           <div class="aspect-[4/3] overflow-hidden bg-slate-900 relative">
             <img
               :src="photo.src"
               :alt="photo.caption"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
               loading="lazy"
             />
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="p-2 rounded-full bg-cyan-500 text-black font-bold text-xs">
+              <span class="p-2 rounded-full bg-cyan-400 text-black font-bold text-xs">
                 ↗
               </span>
             </div>
           </div>
           <div class="p-3">
-            <span class="text-[10px] font-mono font-bold text-cyan-400 block mb-0.5">
+            <span class="text-[10px] font-mono font-bold text-cyan-400 block mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
               {{ photo.tag }}
             </span>
             <p class="text-xs text-slate-300 line-clamp-2 leading-snug">

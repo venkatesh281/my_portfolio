@@ -1,24 +1,56 @@
 <script setup>
 const items = [
-  'Python', 'Django & DRF', 'Laravel', 'PHP', 'Vue.js 3',
-  'Celery Workers', 'RabbitMQ', 'Redis Caching', 'MySQL Indexing',
-  '85+ Students Mentored', 'Asynchronous Queues', 'Docker',
-  'Chennai, India', 'RESTful APIs', 'Flower Monitoring'
+  'DJANGO & DRF',
+  'CELERY WORKERS',
+  'RABBITMQ',
+  'REDIS CACHING',
+  'LARAVEL',
+  'VUE.JS 3',
+  'MYSQL INDEXING',
+  'ASYNCHRONOUS QUEUES',
+  'DOCKER',
+  'FLOWER MONITORING',
+  '85+ STUDENTS MENTORED',
+  'RESTFUL APIS',
+  'CHENNAI, INDIA'
 ]
 const doubled = [...items, ...items]
 </script>
 
 <template>
-  <div class="marquee-wrapper py-3.5 my-8">
-    <div class="marquee-track">
+  <div class="w-full bg-[#f6f4ee] border-y border-[rgba(18,19,22,0.09)] py-3 overflow-hidden select-none">
+    <div class="marquee-track flex items-center whitespace-nowrap">
       <span
         v-for="(item, i) in doubled"
         :key="i"
-        class="inline-flex items-center gap-4 text-xs font-mono font-medium tracking-wider uppercase text-slate-400 shrink-0 hover:text-cyan-400 transition-colors"
+        class="inline-flex items-center gap-4 text-xs font-mono font-medium tracking-wider uppercase text-[#525866] shrink-0 mx-4"
       >
         <span>{{ item }}</span>
-        <span class="text-cyan-400 text-sm font-bold">◆</span>
+        <span class="text-[#0038ff] text-xs">◆</span>
       </span>
     </div>
   </div>
 </template>
+
+<style scoped>
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+</style>

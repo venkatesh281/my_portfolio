@@ -2,69 +2,76 @@
 import { portfolioData } from '../data/portfolioData'
 
 const { about, stats } = portfolioData
+// Use only the 3 real stats from portfolioData.stats, dropping the 4th
+const realStats = stats.slice(0, 3)
 </script>
 
 <template>
-  <section id="about" class="py-24 px-6 md:px-10 max-w-7xl mx-auto">
-    <hr class="section-divider mb-16" />
+  <section id="about" class="py-24 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto bg-[#f6f4ee] text-[#121316]">
+    <div class="w-full h-[1px] bg-[rgba(18,19,22,0.09)] mb-16"></div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       
-      <!-- Left Column: Section Title & Mission -->
-      <div class="lg:col-span-4 space-y-6">
-        <div class="eyebrow">/01 About Venkatesh</div>
-        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500"></div>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight leading-snug">
+      <!-- Left Column: Section Title & Mission Statement -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="text-xs font-mono font-semibold tracking-widest text-[#0038ff] uppercase flex items-center gap-2">
+          <span class="w-2 h-[1px] bg-[#0038ff]"></span>
+          <span>/01 About Venkateshwaran</span>
+        </div>
+
+        <h2 class="font-serif font-bold text-3xl sm:text-4xl text-[#121316] tracking-tight leading-snug">
           Architecting resilient backends, empowering developers.
         </h2>
-        <p class="text-sm font-mono text-slate-400 leading-relaxed">
-          Over 2 years of enterprise engineering in Chennai, focused on backend microservices, async message workers, and community education.
+
+        <p class="text-xs font-mono text-[#525866] leading-relaxed">
+          Over 2 years of commercial software engineering in Chennai, specializing in asynchronous message queues, high-throughput microservices, and practical engineering education.
         </p>
+
+        <!-- 3 Concrete Real Metrics Row (Type-Only with Hairlines, Zero Cards) -->
+        <div class="pt-6 border-t border-[rgba(18,19,22,0.09)] space-y-4">
+          <div
+            v-for="(stat, idx) in realStats"
+            :key="stat.label"
+            class="flex items-baseline justify-between py-2 border-b border-[rgba(18,19,22,0.06)]"
+          >
+            <div>
+              <span class="font-sans font-semibold text-xs text-[#121316]">{{ stat.label }}</span>
+              <span class="block text-[11px] font-mono text-[#666d7e]">{{ stat.detail }}</span>
+            </div>
+            <div class="font-mono font-bold text-2xl text-[#0038ff] tabular-nums pl-4">
+              {{ stat.value }}
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Right Column: Narrative & Philosophy Pillars -->
-      <div class="lg:col-span-8 space-y-12">
+      <!-- Right Column: Narrative & 4 Architectural Principles (Hairline List, Zero Cards) -->
+      <div class="lg:col-span-7 space-y-10">
         
-        <!-- Summary Paragraph -->
-        <p class="text-base sm:text-lg text-slate-200 leading-relaxed font-light">
+        <!-- Verbatim Repository Summary -->
+        <p class="text-base sm:text-lg text-[#525866] leading-relaxed font-sans font-normal">
           {{ about.summary }}
         </p>
 
-        <!-- 4 Philosophy Pillars Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- 4 Architectural Principles as a Numbered Hairline List (Zero Cards, Zero Dark Classes) -->
+        <div class="space-y-0 border-t border-[rgba(18,19,22,0.09)]">
           <div
             v-for="(item, idx) in about.philosophy"
             :key="item.title"
-            class="glass-card rounded-2xl p-6 border border-slate-800 space-y-3 group hover:border-cyan-500/40"
+            class="py-6 border-b border-[rgba(18,19,22,0.09)] transition-colors"
           >
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-cyan-400">0{{ idx + 1 }}</span>
-              <span class="text-slate-500 group-hover:text-cyan-400 transition-colors">↗</span>
-            </div>
-            <h3 class="font-display font-bold text-base text-white group-hover:text-cyan-300 transition-colors">
-              {{ item.title }}
-            </h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              {{ item.description }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Metrics Cards Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
-          <div
-            v-for="stat in stats"
-            :key="stat.label"
-            class="glass-panel rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/30 transition-colors"
-          >
-            <div class="font-display font-extrabold text-3xl sm:text-4xl text-cyan-400 mb-1">
-              {{ stat.value }}
-            </div>
-            <div class="text-xs font-semibold text-white">
-              {{ stat.label }}
-            </div>
-            <div class="text-[11px] font-mono text-slate-400 mt-0.5">
-              {{ stat.detail }}
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-baseline">
+              <div class="sm:col-span-2 text-xs font-mono font-semibold text-[#0038ff]">
+                0{{ idx + 1 }} //
+              </div>
+              <div class="sm:col-span-10 space-y-1.5">
+                <h3 class="font-serif font-bold text-lg text-[#121316]">
+                  {{ item.title }}
+                </h3>
+                <p class="text-xs sm:text-sm text-[#525866] leading-relaxed font-sans">
+                  {{ item.description }}
+                </p>
+              </div>
             </div>
           </div>
         </div>

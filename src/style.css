@@ -2,17 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== GLOBAL TOKENS & RESETS ===== */
+/* ===== GLOBAL TOKENS & SYSTEM RESETS ===== */
 :root {
-  --bg: #080c14;
-  --fg: #f8fafc;
-  --muted: #94a3b8;
-  --accent-cyan: #22d3ee;
-  --accent-lime: #a3e635;
-  --accent-indigo: #6366f1;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --card-bg: rgba(15, 23, 42, 0.65);
+  /* Concept B: Editorial Atelier Design Tokens */
+  --paper-base: #f6f4ee;
+  --paper-subtle: #ede9de;
+  --ink-primary: #121316;
+  --ink-secondary: #525866;
+  --ink-muted: #5a606e;
+  --accent-cobalt: #0038ff;
+  --accent-cobalt-dark: #002ec7;
+  --border-hairline: rgba(18, 19, 22, 0.09);
+  --surface-dark: #121316;
+  --surface-dark-fg: #fbfbfb;
+  --code-accent: #60a5fa;
+
+  /* Spring physics & motion */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-editorial: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Legacy aliases for rest of site during phased redesign */
+  --bg: #f6f4ee;
+  --fg: #121316;
+  --fg-secondary: #525866;
+  --muted: #5a606e;
+  --accent-cyan: #0038ff;
+  --border: rgba(18, 19, 22, 0.09);
+  --border-subtle: rgba(18, 19, 22, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 * {
@@ -22,16 +41,13 @@
 html {
   scroll-behavior: auto; /* Lenis handles smooth scrolling */
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color-scheme: light;
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--fg);
+  background-color: var(--paper-base);
+  color: var(--ink-primary);
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.12) 0px, transparent 45%),
-    radial-gradient(at 85% 20%, rgba(34, 211, 238, 0.10) 0px, transparent 40%),
-    radial-gradient(at 50% 75%, rgba(16, 185, 129, 0.08) 0px, transparent 45%);
   background-attachment: fixed;
 }
 
@@ -40,18 +56,24 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080c14;
+  background: #f6f4ee;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #d4cec2;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-cyan);
+  background: var(--accent-cobalt);
 }
 
-/* ===== TYPOGRAPHY ===== */
+/* ===== TYPOGRAPHY & TEXT UTILITIES ===== */
+.font-serif {
+  font-family: 'Newsreader', Georgia, serif;
+}
 .font-display {
+  font-family: 'Newsreader', Georgia, serif;
+}
+.font-watermark {
   font-family: 'Syne', sans-serif;
 }
 .font-body {
@@ -61,10 +83,8 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 .text-gradient-cyan {
@@ -77,71 +97,87 @@ body {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--accent-cyan);
 }
 
-/* ===== CARDS & PANELS ===== */
+/* ===== CARDS & PANELS (Emil Design Eng & Unslop Craft) ===== */
 .glass-panel {
-  background: rgba(13, 19, 33, 0.75);
+  background: var(--card-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border);
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(13, 19, 33, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.glass-card:hover {
-  background: rgba(20, 30, 55, 0.75);
-  border-color: rgba(34, 211, 238, 0.35);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px -12px rgba(34, 211, 238, 0.12);
+  transition: transform 180ms var(--ease-out), border-color 180ms ease, background-color 180ms ease;
 }
 
-/* ===== BUTTONS (Dennis Snellenberg & Reza GHZ Inspired) ===== */
+@media (hover: hover) and (pointer: fine) {
+  .glass-card:hover {
+    background: rgba(17, 26, 46, 0.85);
+    border-color: rgba(34, 211, 238, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+.glass-card:active {
+  transform: scale(0.985);
+}
+
+/* ===== TACTILE BUTTONS & PILLS (Emil Design Eng) ===== */
 .btn-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.4rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: #f8fafc;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
   position: relative;
-  overflow: hidden;
+  user-select: none;
 }
-.btn-pill:hover {
-  background: rgba(34, 211, 238, 0.15);
-  border-color: rgba(34, 211, 238, 0.5);
-  color: #22d3ee;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px -8px rgba(34, 211, 238, 0.25);
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-pill:hover {
+    background: rgba(34, 211, 238, 0.12);
+    border-color: rgba(34, 211, 238, 0.4);
+    color: #22d3ee;
+    transform: translateY(-1px);
+  }
+}
+
+.btn-pill:active {
+  transform: scale(0.97);
 }
 
 .btn-pill.solid {
-  background: linear-gradient(135deg, #22d3ee 0%, #0284c7 100%);
+  background: #22d3ee;
   border: 1px solid transparent;
   color: #030712;
   font-weight: 700;
-  box-shadow: 0 10px 24px -8px rgba(34, 211, 238, 0.35);
 }
-.btn-pill.solid:hover {
-  background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -8px rgba(34, 211, 238, 0.5);
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-pill.solid:hover {
+    background: #38bdf8;
+    color: #030712;
+    transform: translateY(-1px);
+  }
+}
+
+.btn-pill.solid:active {
+  transform: scale(0.97);
 }
 
 /* ===== MARQUEE TICKER ===== */
@@ -149,13 +185,15 @@ body {
   overflow: hidden;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  background: rgba(8, 12, 20, 0.7);
+  background: rgba(8, 12, 20, 0.6);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 .marquee-track {
   display: flex;
   gap: 2.5rem;
   white-space: nowrap;
-  animation: marquee 32s linear infinite;
+  animation: marquee 38s linear infinite;
 }
 @keyframes marquee {
   0% { transform: translateX(0); }
@@ -171,16 +209,17 @@ hr.section-divider {
   border-top: 1px solid var(--border-subtle);
 }
 
-/* ===== AMBIENT GLOW FOLLOWER (Smooth & Non-Intrusive) ===== */
-#ambient-glow {
-  position: fixed;
-  width: 480px;
-  height: 480px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 65%);
-  transform: translate(-50%, -50%);
-  transition: opacity 0.5s ease;
-  opacity: 0;
+/* ===== ACCESSIBILITY (prefers-reduced-motion) ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
 }

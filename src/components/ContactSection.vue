@@ -17,8 +17,8 @@ const isSubmitted = ref(false)
 
 const triggerConfetti = () => {
   confetti({
-    particleCount: 70,
-    spread: 60,
+    particleCount: 60,
+    spread: 55,
     origin: { y: 0.7 }
   })
 }
@@ -46,10 +46,10 @@ const handleSubmit = () => {
   <section id="contact" class="py-24 px-6 md:px-10 max-w-7xl mx-auto">
     <hr class="section-divider mb-16" />
 
-    <!-- Big Editorial Headline (Dennis Snellenberg Style) -->
-    <div class="mb-16">
-      <div class="eyebrow mb-3">/06 Direct Connection</div>
-      <h2 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] max-w-4xl">
+    <!-- Headline -->
+    <div class="mb-14">
+      <div class="eyebrow mb-2.5">/06 Direct Connection</div>
+      <h2 class="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] max-w-4xl">
         Let's build something <span class="text-gradient-cyan">extraordinary</span> together.
       </h2>
       <p class="text-sm sm:text-base text-slate-300 mt-4 max-w-2xl leading-relaxed">
@@ -58,23 +58,23 @@ const handleSubmit = () => {
     </div>
 
     <!-- Contact Details & Form Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
       
       <!-- Left Column: Quick Contact Cards -->
-      <div class="lg:col-span-5 space-y-5">
+      <div class="lg:col-span-5 space-y-4">
         
         <!-- Email Copy Card -->
         <div
           @click="copyToClipboard(p.email, 'email')"
-          class="glass-panel rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group flex items-center justify-between"
+          class="glass-panel rounded-2xl p-5 border border-white/[0.08] hover:border-cyan-500/40 transition-colors cursor-pointer group flex items-center justify-between shadow-sm"
         >
-          <div>
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Email Address</div>
-            <div class="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
+          <div class="min-w-0 pr-3">
+            <div class="text-[11px] font-mono text-slate-400">Email Address</div>
+            <div class="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors truncate">
               {{ p.email }}
             </div>
           </div>
-          <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400">
+          <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400 shrink-0">
             {{ isCopied === 'email' ? '✓ Copied!' : 'Click to Copy' }}
           </span>
         </div>
@@ -82,15 +82,15 @@ const handleSubmit = () => {
         <!-- Phone / WhatsApp Copy Card -->
         <div
           @click="copyToClipboard(p.phone, 'phone')"
-          class="glass-panel rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group flex items-center justify-between"
+          class="glass-panel rounded-2xl p-5 border border-white/[0.08] hover:border-cyan-500/40 transition-colors cursor-pointer group flex items-center justify-between shadow-sm"
         >
           <div>
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Phone & WhatsApp</div>
-            <div class="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
+            <div class="text-[11px] font-mono text-slate-400">Phone &amp; WhatsApp</div>
+            <div class="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors tabular-nums">
               {{ p.phone }}
             </div>
           </div>
-          <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-emerald-400">
+          <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-emerald-400 shrink-0">
             {{ isCopied === 'phone' ? '✓ Copied!' : 'Click to Copy' }}
           </span>
         </div>
@@ -100,7 +100,7 @@ const handleSubmit = () => {
           :href="p.whatsapp"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full py-4 px-6 rounded-2xl font-bold text-sm text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-800/60 flex items-center justify-center gap-2.5 transition-all shadow-lg"
+          class="w-full py-3.5 px-6 rounded-2xl font-bold text-sm text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-800/50 flex items-center justify-center gap-2.5 transition-colors shadow-sm"
         >
           <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/>
@@ -109,12 +109,12 @@ const handleSubmit = () => {
         </a>
 
         <!-- Professional Profiles -->
-        <div class="pt-4 flex gap-3">
+        <div class="pt-2 flex gap-3">
           <a
             :href="p.linkedin"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 text-xs font-mono font-bold text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-all"
+            class="flex-1 py-3 px-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-xs font-mono font-medium text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-colors"
           >
             <span>LinkedIn Profile ↗</span>
           </a>
@@ -122,7 +122,7 @@ const handleSubmit = () => {
             :href="p.github"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 text-xs font-mono font-bold text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-all"
+            class="flex-1 py-3 px-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-xs font-mono font-medium text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-colors"
           >
             <span>GitHub Profile ↗</span>
           </a>
@@ -132,7 +132,7 @@ const handleSubmit = () => {
 
       <!-- Right Column: Interactive Note Dispatcher -->
       <div class="lg:col-span-7">
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] space-y-5 shadow-lg">
           <div>
             <h3 class="font-display font-bold text-xl text-white">
               Send a Direct Note
@@ -151,7 +151,7 @@ const handleSubmit = () => {
                   required
                   type="text"
                   placeholder="e.g. Sukumar"
-                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
                 />
               </div>
               <div class="space-y-1">
@@ -161,7 +161,7 @@ const handleSubmit = () => {
                   required
                   type="email"
                   placeholder="sukumar@example.com"
-                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ const handleSubmit = () => {
                 v-model="form.subject"
                 type="text"
                 placeholder="Full Stack Engineering Opportunity / Mentorship"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono"
               />
             </div>
 
@@ -183,15 +183,15 @@ const handleSubmit = () => {
                 required
                 rows="4"
                 placeholder="Share your requirements or thoughts..."
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono resize-none"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400 font-mono resize-none"
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full btn-pill solid py-3.5 text-sm font-mono font-bold"
+              class="w-full btn-pill solid py-3.5 text-xs sm:text-sm font-mono font-bold cursor-pointer"
             >
-              <span>Dispatch Note to Venkatesh</span>
+              <span>Dispatch Note to Venkateshwaran</span>
               <svg class="w-4 h-4" viewBox="0 0 12 12" fill="none">
                 <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>

@@ -15,7 +15,7 @@ const scrollToTop = () => {
         <img
           src="/logo.png"
           alt="Venkateshwaran"
-          class="w-8 h-8 rounded-xl object-contain shadow-md shadow-purple-500/25"
+          class="w-8 h-8 rounded-xl object-contain shadow-sm"
         />
         <div>
           <div class="font-display font-bold text-sm text-white">
@@ -27,24 +27,24 @@ const scrollToTop = () => {
         </div>
       </div>
 
-      <!-- Quick Nav Links -->
+      <!-- Quick Nav Links (Clean Sentence Case) -->
       <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400">
         <a href="#about" class="hover:text-white transition-colors">About</a>
         <a href="#skills" class="hover:text-white transition-colors">Skills</a>
         <a href="#experience" class="hover:text-white transition-colors">Experience</a>
-        <a href="#mentorship" class="text-cyan-400 hover:text-cyan-300">Mentorship ★</a>
+        <a href="#mentorship" class="hover:text-white transition-colors">Mentorship</a>
         <a href="#projects" class="hover:text-white transition-colors">Projects</a>
         <a href="#contact" class="hover:text-white transition-colors">Contact</a>
       </div>
 
       <!-- Copyright & Back to Top -->
       <div class="flex items-center gap-4">
-        <span class="text-xs font-mono text-slate-500">
+        <span class="text-xs font-mono text-slate-500 tabular-nums">
           © {{ year }} Venkateshwaran
         </span>
         <button
           @click="scrollToTop"
-          class="btn-pill text-xs font-mono"
+          class="btn-pill text-xs font-mono cursor-pointer"
           aria-label="Back to top"
         >
           <span>Top ↑</span>
