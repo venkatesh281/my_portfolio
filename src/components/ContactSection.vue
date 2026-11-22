@@ -1,29 +1,57 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, nextTick, onUnmounted } from 'vue'
 import { portfolioData } from '../data/portfolioData'
 
 const p = portfolioData.personal
+const web3FormsKey = import.meta.env.VITE_WEB3FORMS_KEY || ''
 
 const form = ref({
   name: '',
   email: '',
   subject: '',
   message: '',
-  _hp: '' // Honeypot field
+  botcheck: false
+})
+
+const lastSubmitted = ref({
+  name: '',
+  email: '',
+  subject: '',
+  message: ''
 })
 
 const isSubmitting = ref(false)
-const isSubmitted = ref(false)
+const statusType = ref('') // 'success' | 'error' | ''
 const formError = ref('')
+const cooldownRemaining = ref(0)
+const statusBoxRef = ref(null)
 const toastMessage = ref('')
 const toastVisible = ref(false)
+
+let cooldownTimer = null
+
+const startCooldown = (seconds = 30) => {
+  cooldownRemaining.value = seconds
+  if (cooldownTimer) clearInterval(cooldownTimer)
+  cooldownTimer = setInterval(() => {
+    cooldownRemaining.value--
+    if (cooldownRemaining.value <= 0) {
+      clearInterval(cooldownTimer)
+      cooldownTimer = null
+    }
+  }, 1000)
+}
+
+onUnmounted(() => {
+  if (cooldownTimer) clearInterval(cooldownTimer)
+})
 
 const showToast = (msg) => {
   toastMessage.value = msg
   toastVisible.value = true
   setTimeout(() => {
     toastVisible.value = false
-  }, 2800)
+  }, 3000)
 }
 
 const copyToClipboard = async (text, label) => {
@@ -35,43 +63,112 @@ const copyToClipboard = async (text, label) => {
   }
 }
 
-const handleSubmit = () => {
-  formError.value = ''
+const mailtoFallbackUrl = computed(() => {
+  const subj = encodeURIComponent(lastSubmitted.value.subject || 'Portfolio contact')
+  const body = encodeURIComponent(
+    `Name: ${lastSubmitted.value.name}\nEmail: ${lastSubmitted.value.email}\n\nMessage:\n${lastSubmitted.value.message}`
+  )
+  return `mailto:${p.email}?subject=${subj}&body=${body}`
+})
 
-  // Honeypot bot check
-  if (form.value._hp) {
+const handleSubmit = async () => {
+  formError.value = ''
+  statusType.value = ''
+
+  // Honeypot spam check (silent drop)
+  if (form.value.botcheck) {
+    isSubmitting.value = true
+    setTimeout(() => {
+      isSubmitting.value = false
+      statusType.value = 'success'
+      form.value.name = ''
+      form.value.email = ''
+      form.value.subject = ''
+      form.value.message = ''
+      form.value.botcheck = false
+    }, 400)
+    return
+  }
+
+  // Cooldown check
+  if (cooldownRemaining.value > 0) {
+    formError.value = `Please wait ${cooldownRemaining.value}s before submitting another message.`
     return
   }
 
   // Field validation
-  if (!form.value.name.trim() || !form.value.email.trim() || !form.value.message.trim()) {
+  const trimmedName = form.value.name.trim()
+  const trimmedEmail = form.value.email.trim()
+  const trimmedMessage = form.value.message.trim()
+  const trimmedSubject = form.value.subject.trim()
+
+  if (!trimmedName || !trimmedEmail || !trimmedMessage) {
     formError.value = 'Please fill out all required fields.'
     return
   }
 
   // Basic email pattern check
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(form.value.email.trim())) {
+  if (!emailRegex.test(trimmedEmail)) {
     formError.value = 'Please enter a valid email address.'
     return
   }
 
+  // Cache submitted values for mailto fallback
+  lastSubmitted.value = {
+    name: trimmedName,
+    email: trimmedEmail,
+    subject: trimmedSubject,
+    message: trimmedMessage
+  }
+
   isSubmitting.value = true
 
-  const mailtoSubject = encodeURIComponent(
-    form.value.subject || `Portfolio Architecture Inquiry from ${form.value.name}`
-  )
-  const mailtoBody = encodeURIComponent(
-    `Name: ${form.value.name}\nEmail: ${form.value.email}\n\nMessage:\n${form.value.message}`
-  )
-  const mailtoLink = `mailto:${p.email}?subject=${mailtoSubject}&body=${mailtoBody}`
+  const payload = {
+    access_key: web3FormsKey,
+    name: trimmedName,
+    email: trimmedEmail,
+    subject: trimmedSubject || 'Portfolio contact',
+    message: trimmedMessage,
+    from_name: 'Portfolio Website'
+  }
 
-  setTimeout(() => {
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const data = await response.json()
+
+    if (response.ok && data.success) {
+      statusType.value = 'success'
+      showToast('✓ Message sent successfully!')
+      // Clear form on success
+      form.value.name = ''
+      form.value.email = ''
+      form.value.subject = ''
+      form.value.message = ''
+      form.value.botcheck = false
+      startCooldown(30)
+    } else {
+      statusType.value = 'error'
+      showToast("Couldn't send message")
+    }
+  } catch {
+    statusType.value = 'error'
+    showToast('Network error: unable to send')
+  } finally {
     isSubmitting.value = false
-    isSubmitted.value = true
-    window.location.href = mailtoLink
-    showToast('✓ Dispatching note via your email client...')
-  }, 400)
+    await nextTick()
+    if (statusBoxRef.value) {
+      statusBoxRef.value.focus()
+    }
+  }
 }
 </script>
 
@@ -238,13 +335,14 @@ const handleSubmit = () => {
             </span>
           </div>
 
-          <form @submit.prevent="handleSubmit" class="space-y-6">
-            <!-- Honeypot Bot Shield -->
+          <form @submit.prevent="handleSubmit" class="space-y-6" novalidate>
+            <!-- Honeypot Bot Shield (Hidden from real users) -->
             <input
-              v-model="form._hp"
-              type="text"
-              name="_gotcha"
+              v-model="form.botcheck"
+              type="checkbox"
+              name="botcheck"
               class="hidden"
+              style="display: none !important;"
               tabindex="-1"
               autocomplete="off"
             />
@@ -252,12 +350,14 @@ const handleSubmit = () => {
             <!-- Name & Email Underlined Inputs -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-1">
-                <label class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
+                <label for="contact-name" class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
                   Your Name *
                 </label>
                 <input
+                  id="contact-name"
                   v-model="form.name"
                   required
+                  maxlength="100"
                   type="text"
                   placeholder="e.g. Sukumar Radhakrishnan"
                   class="w-full py-2 bg-transparent border-b border-[rgba(18,19,22,0.2)] focus:border-[#0038ff] outline-none text-sm font-sans text-[#121316] placeholder-[rgba(18,19,22,0.3)] transition-colors"
@@ -265,12 +365,14 @@ const handleSubmit = () => {
               </div>
 
               <div class="space-y-1">
-                <label class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
+                <label for="contact-email" class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
                   Your Email *
                 </label>
                 <input
+                  id="contact-email"
                   v-model="form.email"
                   required
+                  maxlength="150"
                   type="email"
                   placeholder="sukumar@example.com"
                   class="w-full py-2 bg-transparent border-b border-[rgba(18,19,22,0.2)] focus:border-[#0038ff] outline-none text-sm font-sans text-[#121316] placeholder-[rgba(18,19,22,0.3)] transition-colors"
@@ -280,11 +382,13 @@ const handleSubmit = () => {
 
             <!-- Subject Underlined Input -->
             <div class="space-y-1">
-              <label class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
+              <label for="contact-subject" class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
                 Subject / Purpose
               </label>
               <input
+                id="contact-subject"
                 v-model="form.subject"
+                maxlength="200"
                 type="text"
                 placeholder="Full Stack Engineering / Asynchronous Architecture / Mentorship"
                 class="w-full py-2 bg-transparent border-b border-[rgba(18,19,22,0.2)] focus:border-[#0038ff] outline-none text-sm font-sans text-[#121316] placeholder-[rgba(18,19,22,0.3)] transition-colors"
@@ -293,12 +397,14 @@ const handleSubmit = () => {
 
             <!-- Message Underlined Textarea -->
             <div class="space-y-1">
-              <label class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
+              <label for="contact-message" class="block text-[11px] font-mono font-bold uppercase tracking-wider text-[#666d7e]">
                 Message *
               </label>
               <textarea
+                id="contact-message"
                 v-model="form.message"
                 required
+                maxlength="3000"
                 rows="4"
                 placeholder="Share your requirements, engineering team specifications, or project context..."
                 class="w-full py-2 bg-transparent border-b border-[rgba(18,19,22,0.2)] focus:border-[#0038ff] outline-none text-sm font-sans text-[#121316] placeholder-[rgba(18,19,22,0.3)] transition-colors resize-none"
@@ -306,24 +412,63 @@ const handleSubmit = () => {
             </div>
 
             <!-- Validation Error Warning -->
-            <div v-if="formError" class="p-3 rounded-lg bg-red-50 border border-red-200 text-xs font-mono text-red-600">
+            <div
+              v-if="formError"
+              role="alert"
+              aria-live="assertive"
+              class="p-3 rounded-lg bg-red-50 border border-red-200 text-xs font-mono text-red-600"
+            >
               {{ formError }}
             </div>
 
-            <!-- Submit Button with Double-Submit Prevention -->
+            <!-- Status Alert: Success -->
+            <div
+              v-if="statusType === 'success'"
+              ref="statusBoxRef"
+              tabindex="-1"
+              role="status"
+              aria-live="polite"
+              class="p-4 rounded-xl bg-emerald-50/90 border border-emerald-300 text-xs font-mono text-emerald-800 outline-none flex items-start gap-2.5"
+            >
+              <span class="text-base leading-none text-emerald-600 font-bold">✓</span>
+              <p class="leading-relaxed">
+                Thanks, your message has been sent. I'll reply soon.
+              </p>
+            </div>
+
+            <!-- Status Alert: Error with Mailto Fallback -->
+            <div
+              v-if="statusType === 'error'"
+              ref="statusBoxRef"
+              tabindex="-1"
+              role="alert"
+              aria-live="assertive"
+              class="p-4 rounded-xl bg-red-50/90 border border-red-300 text-xs font-mono text-red-800 outline-none space-y-1.5"
+            >
+              <div class="flex items-start gap-2.5">
+                <span class="text-base leading-none text-red-600 font-bold">✕</span>
+                <p class="leading-relaxed">
+                  Couldn't send. Please try again or email
+                  <a
+                    :href="mailtoFallbackUrl"
+                    class="underline text-[#0038ff] font-bold hover:text-[#002ec7] focus:ring-1 focus:ring-[#0038ff] rounded"
+                  >
+                    {{ p.email }}
+                  </a>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Submit Button with Cooldown & Sending State -->
             <button
               type="submit"
-              :disabled="isSubmitting"
+              :disabled="isSubmitting || cooldownRemaining > 0"
               class="w-full py-3.5 px-6 rounded-xl font-mono text-xs font-bold text-white bg-[#0038ff] hover:bg-[#002ec7] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md"
             >
-              <span v-if="isSubmitting">Preparing Email Client...</span>
+              <span v-if="isSubmitting">Sending...</span>
+              <span v-else-if="cooldownRemaining > 0">Message Sent (Cooldown: {{ cooldownRemaining }}s)</span>
               <span v-else>Dispatch Note to Venkateshwaran ↘</span>
             </button>
-
-            <!-- Success Confirmation -->
-            <div v-if="isSubmitted" class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-mono text-emerald-700 text-center">
-              ✓ Note formatted! Your mail client will open with all details populated.
-            </div>
           </form>
         </div>
       </div>

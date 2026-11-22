@@ -37,7 +37,7 @@ The site was crafted from the ground up to break away from generic, dark-graphit
    - 4 alternating spreads for **GES CRM Platform**, **Sonashi Service Ticket Management**, **Spring MVC Portal**, and the **Asynchronous Queue Sandbox**.
    - Featured dark carbon container for Project #1, accompanied by monospace vector state machine diagrams.
 7. **Dual Credential Plaque (Education & Problem Solving)**:
-   - Academic degrees (Master of Science (M.Sc.), Yadava College, 75%; B.Sc. Computer Science, SVN College, 60%).
+   - Academic degrees (Master of Science (M.Sc.), Yadava College, 75%; Bachelor of Science (B.Sc.), SVN College, 60%).
    - Problem-solving verification card highlighting 200+ HackerRank challenges solved across Java and Python.
 8. **Stationery Letterhead & Colophon (Contact & Footer)**:
    - Minimalist underlined contact form with client-side validation, honeypot bot trap, and double-submit protection.
@@ -72,14 +72,25 @@ npm install
 ```
 *(On Windows PowerShell: `npm.cmd install`)*
 
-### 2. Start Development Server
+### 2. Environment Variables Configuration
+Copy the template environment file and set your [Web3Forms](https://web3forms.com) access key:
+```bash
+cp .env.example .env.local
+```
+Inside `.env.local`:
+```env
+VITE_WEB3FORMS_KEY=your_web3forms_access_key_here
+```
+*(Note: `.env.local` is git-ignored to prevent credential leaks. Never commit access keys to public repositories.)*
+
+### 3. Start Development Server
 ```bash
 npm run dev
 ```
 *(On Windows PowerShell: `npm.cmd run dev`)*  
 Open your browser and visit: **`http://localhost:3000`**
 
-### 3. Build & Preview Production Bundle
+### 4. Build & Preview Production Bundle
 ```bash
 npm run build
 npm run preview

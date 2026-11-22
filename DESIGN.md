@@ -293,7 +293,7 @@ Each project is presented as an individual architectural broadsheet spread. Zero
     - Institution: *Yadava College of Arts and Science*
     - Location: Madurai, Tamil Nadu
     - Period: `2019 – 2021` | Score: `75%`
-  - **Bachelor of Science (B.Sc.) in Computer Science**
+  - **Bachelor of Science (B.Sc.)**
     - Institution: *S. Vellaichamy Nadar College*
     - Location: Madurai, Tamil Nadu
     - Period: `2016 – 2019` | Score: `60%`
@@ -450,7 +450,7 @@ An honest accounting of completed items vs. specifications:
     - Typographic/monospace vector schemas detailing architecture and state machines (no fabricated mockups).
     - Real repository links, live tags, and verbatim project highlights.
 12. **Section 07 — Education & Problem Solving (Phase 7)**:
-    - Dual credential plaque with formal academic degrees (Master of Science (M.Sc.), Yadava College, 75%; B.Sc. Computer Science, SVN College, 60%).
+    - Dual credential plaque with formal academic degrees (Master of Science (M.Sc.), Yadava College, 75%; Bachelor of Science (B.Sc.), SVN College, 60%).
     - Problem-solving verification card highlighting 200+ HackerRank challenges solved across Java and Python with direct profile anchor.
 13. **Section 08 — Contact & Editorial Footer (Phase 8)**:
     - Stationery letterhead card on warm paper with underlined fields and cobalt submit button.

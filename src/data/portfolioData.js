@@ -312,7 +312,7 @@ export const portfolioData = {
       location: "Madurai, Tamil Nadu"
     },
     {
-      degree: "Bachelor of Science (B.Sc.) in Computer Science",
+      degree: "Bachelor of Science (B.Sc.)",
       institution: "S. Vellaichamy Nadar College",
       period: "2016 – 2019",
       score: "60%",
