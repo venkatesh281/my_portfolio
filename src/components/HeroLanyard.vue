@@ -676,8 +676,9 @@ onUnmounted(() => {
     >
       <!-- Pre-3D Instant Paint Fallback Preview (Zero Layout Shift while Three.js lazily parses) -->
       <div
-        v-if="!is3dReady"
-        class="w-full max-w-[280px] sm:max-w-[320px] p-5 rounded-2xl bg-[#fbfaf6] border border-[#e6e2d4] shadow-sm animate-pulse text-[#121316]"
+        class="absolute pointer-events-none transition-opacity duration-300 w-full max-w-[280px] sm:max-w-[320px] p-5 rounded-2xl bg-[#fbfaf6] border border-[#e6e2d4] shadow-sm text-[#121316]"
+        :class="is3dReady ? 'opacity-0' : 'opacity-100'"
+      >
       >
         <div class="flex items-center justify-between text-xs font-mono text-[#525866]">
           <span class="font-bold text-[#121316]">VISU.AI</span>

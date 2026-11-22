@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -8,15 +8,20 @@ import NavBar from './components/NavBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import MarqueeBar from './components/MarqueeBar.vue'
 import AboutSection from './components/AboutSection.vue'
-import SkillsSection from './components/SkillsSection.vue'
-import ExperienceSection from './components/ExperienceSection.vue'
-import MentorshipSection from './components/MentorshipSection.vue'
-import ProjectsSection from './components/ProjectsSection.vue'
-import ContactSection from './components/ContactSection.vue'
-import FooterBar from './components/FooterBar.vue'
-import PhotoModal from './components/PhotoModal.vue'
+
+// Code-split below-the-fold sections for instant first-paint performance
+const SkillsSection = defineAsyncComponent(() => import('./components/SkillsSection.vue'))
+const ExperienceSection = defineAsyncComponent(() => import('./components/ExperienceSection.vue'))
+const MentorshipSection = defineAsyncComponent(() => import('./components/MentorshipSection.vue'))
+const ProjectsSection = defineAsyncComponent(() => import('./components/ProjectsSection.vue'))
+const EducationSection = defineAsyncComponent(() => import('./components/EducationSection.vue'))
+const ContactSection = defineAsyncComponent(() => import('./components/ContactSection.vue'))
+const FooterBar = defineAsyncComponent(() => import('./components/FooterBar.vue'))
+const PhotoModal = defineAsyncComponent(() => import('./components/PhotoModal.vue'))
 
 gsap.registerPlugin(ScrollTrigger)
+
+import { portfolioData } from './data/portfolioData'
 
 const activePhoto = ref(null)
 const isPhotoModalOpen = ref(false)
@@ -25,9 +30,17 @@ let lenis = null
 let tickerCallback = null
 let pointerMoveHandler = null
 
-const openPhoto = (photo) => {
-  activePhoto.value = photo
+const openPhoto = (payload) => {
+  if (typeof payload === 'number') {
+    activePhoto.value = portfolioData.mentorship.gallery[payload]
+  } else {
+    activePhoto.value = payload
+  }
   isPhotoModalOpen.value = true
+}
+
+const onNavigatePhoto = (newPhoto) => {
+  activePhoto.value = newPhoto
 }
 
 const closePhoto = () => {
@@ -87,7 +100,7 @@ onUnmounted(() => {
     ></div>
 
     <NavBar />
-    <main>
+    <main id="main-content" tabindex="-1" class="outline-none">
       <HeroSection />
       <MarqueeBar />
       <AboutSection />
@@ -95,10 +108,11 @@ onUnmounted(() => {
       <ExperienceSection />
       <MentorshipSection @openPhoto="openPhoto" />
       <ProjectsSection />
+      <EducationSection />
       <ContactSection />
     </main>
     <FooterBar />
-    <PhotoModal :photo="activePhoto" :isOpen="isPhotoModalOpen" @close="closePhoto" />
+    <PhotoModal :photo="activePhoto" :isOpen="isPhotoModalOpen" @close="closePhoto" @navigate="onNavigatePhoto" />
   </div>
 </template>
 

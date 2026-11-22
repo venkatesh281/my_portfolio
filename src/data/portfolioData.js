@@ -305,7 +305,7 @@ export const portfolioData = {
 
   education: [
     {
-      degree: "Master of Science (M.Sc.) in Computer Science",
+      degree: "Master of Science (M.Sc.)",
       institution: "Yadava College of Arts and Science",
       period: "2019 – 2021",
       score: "75%",

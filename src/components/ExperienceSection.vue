@@ -1,85 +1,140 @@
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { portfolioData } from '../data/portfolioData'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const { experience } = portfolioData
+const sectionRef = ref(null)
+let ctx = null
+
+onMounted(() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (prefersReducedMotion || !sectionRef.value) return
+
+  ctx = gsap.context(() => {
+    gsap.fromTo(
+      '.ledger-entry',
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        duration: 0.7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.value,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      }
+    )
+  }, sectionRef.value)
+})
+
+onUnmounted(() => {
+  ctx?.revert()
+})
 </script>
 
 <template>
-  <section id="experience" class="py-24 px-6 md:px-10 max-w-7xl mx-auto">
-    <hr class="section-divider mb-16" />
+  <section
+    id="experience"
+    ref="sectionRef"
+    class="py-14 sm:py-16 md:py-20 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto bg-[#f6f4ee] text-[#121316] select-text"
+  >
+    <!-- Section Top Rule -->
+    <div class="w-full h-[1px] bg-[rgba(18,19,22,0.09)] mb-12"></div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-      
-      <!-- Left Column -->
-      <div class="lg:col-span-4 space-y-5">
-        <div class="eyebrow">/03 Work History</div>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">
-          Commercial Experience
-        </h2>
-        <p class="text-sm font-mono text-slate-400 leading-relaxed">
-          Building production backend pipelines, asynchronous worker systems, and data-driven dashboards across fast-growing engineering teams.
-        </p>
+    <!-- Section Header (Editorial Style) -->
+    <div class="space-y-3.5 max-w-3xl mb-14">
+      <div class="text-xs font-mono font-semibold tracking-widest text-[#0038ff] uppercase flex items-center gap-2">
+        <span class="w-2 h-[1px] bg-[#0038ff]"></span>
+        <span>/03 Commercial Experience &amp; Track Record</span>
       </div>
 
-      <!-- Right Column: Experience Cards -->
-      <div class="lg:col-span-8 space-y-6">
-        <div
-          v-for="(exp, idx) in experience"
-          :key="exp.company"
-          class="glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] hover:border-cyan-500/35 transition-colors space-y-5"
-        >
-          <!-- Top Row: Role, Company, Period -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-800/80 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-mono font-bold text-cyan-400">0{{ idx + 1 }}</span>
-                <h3 class="font-display font-bold text-xl text-white">
-                  {{ exp.role }}
-                </h3>
-              </div>
-              <div class="text-sm font-medium text-cyan-300">
-                {{ exp.company }}
-              </div>
-            </div>
-            
-            <div class="flex flex-wrap sm:flex-col items-start sm:items-end gap-1 text-xs font-mono">
-              <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-200 tabular-nums">
-                {{ exp.period }}
+      <h2 class="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-[#121316] tracking-tight leading-tight">
+        Professional Experience.
+        <span class="block text-2xl sm:text-3xl font-normal text-[#525866] italic pt-1">
+          Chronological ledger of engineering impact &amp; architectures.
+        </span>
+      </h2>
+
+      <p class="text-sm sm:text-base text-[#525866] font-sans leading-relaxed pt-1">
+        Engineering commercial microservices, asynchronous worker systems, and data-driven dashboards across production systems.
+      </p>
+    </div>
+
+    <!-- Swiss Chronological Ledger -->
+    <div class="relative space-y-16 lg:space-y-20">
+      <article
+        v-for="(exp, idx) in experience"
+        :key="exp.company"
+        class="ledger-entry relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-16 border-b border-[rgba(18,19,22,0.09)] last:border-b-0"
+      >
+        <!-- Left Column: Sticky Date & Company Metadata (Swiss Margin) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-3">
+          <div class="flex items-center gap-2 font-mono text-xs font-bold text-[#0038ff]">
+            <span>0{{ idx + 1 }} //</span>
+            <span class="uppercase tracking-wider">{{ exp.period }}</span>
+          </div>
+
+          <div>
+            <h3 class="font-serif font-bold text-2xl sm:text-3xl text-[#121316] tracking-tight">
+              {{ exp.company }}
+            </h3>
+            <div class="flex flex-wrap items-center gap-2 mt-1.5 text-xs font-sans text-[#525866]">
+              <span class="font-bold text-[#121316]">{{ exp.role }}</span>
+              <span class="text-[rgba(18,19,22,0.25)]">•</span>
+              <span>{{ exp.location }}</span>
+              <span class="text-[rgba(18,19,22,0.25)]">•</span>
+              <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-[rgba(18,19,22,0.04)] border border-[rgba(18,19,22,0.08)]">
+                {{ exp.type }}
               </span>
-              <span class="text-slate-400 text-[11px]">{{ exp.location }}</span>
             </div>
           </div>
 
-          <!-- Description -->
-          <p class="text-sm text-slate-300 leading-relaxed">
+          <p class="text-xs sm:text-sm text-[#525866] font-sans leading-relaxed pt-2">
             {{ exp.description }}
           </p>
+        </div>
 
-          <!-- Bullet Points Checklist -->
-          <div class="space-y-2.5">
-            <div
+        <!-- Right Column: Verbatim Highlights & Technologies -->
+        <div class="lg:col-span-8 space-y-6">
+          <!-- Verbatim Engineering Highlights (Typographic Bullets with Hairline Indicator) -->
+          <ul class="space-y-4">
+            <li
               v-for="hl in exp.highlights"
               :key="hl"
-              class="flex items-start gap-3 text-xs sm:text-sm text-slate-300 leading-relaxed"
+              class="flex items-start gap-3.5 text-sm sm:text-base text-[#121316] leading-relaxed group"
             >
-              <span class="text-cyan-400 shrink-0 mt-1">▸</span>
-              <span>{{ hl }}</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#0038ff] shrink-0 mt-2.5"></span>
+              <span class="font-sans text-[#121316]">
+                {{ hl }}
+              </span>
+            </li>
+          </ul>
+
+          <!-- Production Technologies Inventory -->
+          <div class="pt-6 border-t border-[rgba(18,19,22,0.07)] space-y-2.5">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-[#666d7e] font-semibold block">
+              Core Technologies Deployed
+            </span>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="t in exp.technologies"
+                :key="t"
+                class="px-2.5 py-1 text-xs font-mono font-medium text-[#121316] bg-white border border-[rgba(18,19,22,0.1)] rounded-md shadow-[0_1px_2px_rgba(18,19,22,0.02)]"
+              >
+                {{ t }}
+              </span>
             </div>
           </div>
-
-          <!-- Technologies Tags (Clean Hairlines) -->
-          <div class="pt-4 border-t border-slate-800/80 flex flex-wrap gap-1.5">
-            <span
-              v-for="t in exp.technologies"
-              :key="t"
-              class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900 text-slate-300 border border-slate-800"
-            >
-              {{ t }}
-            </span>
-          </div>
         </div>
-      </div>
-
+      </article>
     </div>
+
   </section>
 </template>

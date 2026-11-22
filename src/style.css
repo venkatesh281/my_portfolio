@@ -1,3 +1,21 @@
+/* ===== SELF-HOSTED FONTS (FONTSOURCE) ===== */
+@import '@fontsource/newsreader/400.css';
+@import '@fontsource/newsreader/400-italic.css';
+@import '@fontsource/newsreader/700.css';
+@import '@fontsource/newsreader/700-italic.css';
+
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+
+@import '@fontsource/syne/700.css';
+@import '@fontsource/syne/800.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +27,7 @@
   --paper-subtle: #ede9de;
   --ink-primary: #121316;
   --ink-secondary: #525866;
-  --ink-muted: #5a606e;
+  --ink-muted: #666d7e;
   --accent-cobalt: #0038ff;
   --accent-cobalt-dark: #002ec7;
   --border-hairline: rgba(18, 19, 22, 0.09);
@@ -20,18 +38,6 @@
   /* Spring physics & motion */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-editorial: cubic-bezier(0.23, 1, 0.32, 1);
-
-  /* Legacy aliases for rest of site during phased redesign */
-  --bg: #f6f4ee;
-  --fg: #121316;
-  --fg-secondary: #525866;
-  --muted: #5a606e;
-  --accent-cyan: #0038ff;
-  --border: rgba(18, 19, 22, 0.09);
-  --border-subtle: rgba(18, 19, 22, 0.05);
-  --card-bg: rgba(255, 255, 255, 0.9);
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 * {
@@ -40,7 +46,7 @@
 
 html {
   scroll-behavior: auto; /* Lenis handles smooth scrolling */
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   color-scheme: light;
 }
 
@@ -48,7 +54,33 @@ body {
   background-color: var(--paper-base);
   color: var(--ink-primary);
   overflow-x: hidden;
-  background-attachment: fixed;
+}
+
+/* Skip to content link (Accessibility) */
+.skip-to-content {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--accent-cobalt);
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+.skip-to-content:focus {
+  transform: translateY(0);
+}
+
+/* Visible Focus Styles for Keyboard Accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-cobalt);
+  outline-offset: 2px;
 }
 
 /* Custom smooth scrollbar */
@@ -87,128 +119,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--accent-cyan);
-}
-
-/* ===== CARDS & PANELS (Emil Design Eng & Unslop Craft) ===== */
-.glass-panel {
-  background: var(--card-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
-}
-
-.glass-card {
-  background: rgba(13, 19, 33, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  transition: transform 180ms var(--ease-out), border-color 180ms ease, background-color 180ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .glass-card:hover {
-    background: rgba(17, 26, 46, 0.85);
-    border-color: rgba(34, 211, 238, 0.35);
-    transform: translateY(-2px);
-  }
-}
-
-.glass-card:active {
-  transform: scale(0.985);
-}
-
-/* ===== TACTILE BUTTONS & PILLS (Emil Design Eng) ===== */
-.btn-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.25rem;
-  border-radius: 9999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
-  position: relative;
-  user-select: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .btn-pill:hover {
-    background: rgba(34, 211, 238, 0.12);
-    border-color: rgba(34, 211, 238, 0.4);
-    color: #22d3ee;
-    transform: translateY(-1px);
-  }
-}
-
-.btn-pill:active {
-  transform: scale(0.97);
-}
-
-.btn-pill.solid {
-  background: #22d3ee;
-  border: 1px solid transparent;
-  color: #030712;
-  font-weight: 700;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .btn-pill.solid:hover {
-    background: #38bdf8;
-    color: #030712;
-    transform: translateY(-1px);
-  }
-}
-
-.btn-pill.solid:active {
-  transform: scale(0.97);
-}
-
-/* ===== MARQUEE TICKER ===== */
-.marquee-wrapper {
-  overflow: hidden;
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(8, 12, 20, 0.6);
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
-.marquee-track {
-  display: flex;
-  gap: 2.5rem;
-  white-space: nowrap;
-  animation: marquee 38s linear infinite;
-}
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-/* ===== SECTION DIVIDER ===== */
-hr.section-divider {
-  border: none;
-  border-top: 1px solid var(--border-subtle);
-}
-
 /* ===== ACCESSIBILITY (prefers-reduced-motion) ===== */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -218,8 +128,5 @@ hr.section-divider {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .marquee-track {
-    animation: none;
   }
 }

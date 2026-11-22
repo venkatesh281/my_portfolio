@@ -45,9 +45,10 @@ onUnmounted(() => {
     <!-- Architectural Watermark Display Type (Syne, Positioned Behind Badge for 2.5D Depth) -->
     <div
       class="absolute right-0 top-1/2 -translate-y-1/2 w-full select-none pointer-events-none overflow-hidden z-0 flex justify-end pr-2 sm:pr-8 opacity-[0.042]"
+      style="contain: strict; height: 180px;"
       aria-hidden="true"
     >
-      <span class="font-watermark font-extrabold text-[clamp(4.5rem,14vw,14rem)] tracking-tighter text-[#121316] leading-none whitespace-nowrap">
+      <span class="font-watermark font-extrabold text-[clamp(4.5rem,14vw,14rem)] tracking-tighter text-[#121316] leading-none whitespace-nowrap" style="contain: layout paint;">
         VENKATESHWARAN
       </span>
     </div>

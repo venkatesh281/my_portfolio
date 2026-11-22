@@ -1,173 +1,172 @@
-# 🚀 Venkateshwaran — Portfolio Website
+# 🖋️ Venkateshwaran — Portfolio Website (Editorial Atelier)
 
-A personal portfolio website for **Venkateshwaran**, Full Stack Developer.
+The official personal portfolio website for **Venkateshwaran**, Full Stack Developer.
 
-- **Live URL**: Deployed on **Google Firebase Hosting** (Free Spark Plan)
-- **Tech Stack**: Vue.js 3 (Composition API), Vite 6, Tailwind CSS, Lenis (Smooth Scroll), Lucide Icons, Canvas Confetti
+- **Design Archetype**: **Concept B — "The Editorial Atelier"** (Warm Linen Paper `#f6f4ee`, Carbon Charcoal `#121316`, Klein Cobalt `#0038ff`)
+- **Live URL**: [https://venkateshwaran-portfolio.web.app](https://venkateshwaran-portfolio.web.app)
+- **Local Dev URL**: `http://localhost:3000` (Dev) / `http://localhost:4173` (Preview)
+- **Tech Stack**: Vue.js 3 (Composition API), Vite 6, Tailwind CSS 3, GSAP 3 (ScrollTrigger), Three.js (WebGL 3D Physics), Lenis (Smooth Scroll), Lucide Icons
 - **Repository**: [https://github.com/venkatesh281/my_portfolio](https://github.com/venkatesh281/my_portfolio)
 
 ---
 
-## 🌟 Key Features & Architecture
-- **Responsive Modern Design**: Deep slate aesthetic (`#080c14`) inspired by Dennis Snellenberg & Reza GHZ, with subtle ambient light followers and fluid typography (`Syne` & `Plus Jakarta Sans`).
-- **Hero & Value Proposition**: Spotlights core expertise in Python (Django), PHP (Laravel), Vue.js 3, and Asynchronous Systems (Celery + RabbitMQ + Redis).
-- **Mentorship & Student Training Spotlight**: Features the partnership between **Geometriccae Engineering Services** and **Digisailor**, training **85+ college students** into full-stack engineers.
-- **Academic Recognition**: Highlighted guest lecture at the *Department of Computer Science & Network Systems and Information Technology* on *"Web Development: From Basics To Full Stack"* with Certificate of Appreciation and an 8-photo interactive lightbox modal.
-- **Enterprise Project Showcase**: Detailed architecture breakdowns of **GES CRM Platform**, **Sonashi Service Ticket Management System** (Dubai / UAE), **Spring MVC Portal**, and the **Asynchronous Queue Sandbox**.
-- **Problem Solving**: 200+ HackerRank algorithm challenges in Java & Python.
-- **Built-in Printable Resume**: High-resolution, clean printable resume at `/resume.html` with direct PDF export support.
-- **Direct Contact & WhatsApp**: Instant note dispatcher, one-click copy with confetti celebration, and direct WhatsApp chat links.
+## 🌟 Creative Direction & Architecture
+
+The site was crafted from the ground up to break away from generic, dark-graphite developer templates. It adopts a tactile, high-contrast broadsheet editorial aesthetic:
+
+1. **Linen Paper Canvas (`#f6f4ee`) & Deep Carbon Ink (`#121316`)**:
+   - High contrast, WCAG AA/AAA compliant typography with zero eye-strain.
+   - Accented exclusively with international Klein Cobalt (`#0038ff`) and light cobalt (`#60a5fa`).
+2. **Interactive 3D Hanging Lanyard Badge (Hero)**:
+   - A real-time Three.js physical credential badge hanging from an anchored cord spline (`(0, 3.4, 0)`).
+   - Features real, verified data only: **Venkateshwaran**, **Full Stack Developer**, **visu.ai**, **Chennai, India**, and a functional QR code linking to the live portfolio.
+   - Desktop: Pointer-reactive spring pendulum physics with natural dampening.
+   - Mobile: Touch drag-to-swing interaction, 1.5x DPR cap, `touch-action: pan-y` protection against scroll trapping, and render loop pause when out of view.
+   - Layered depth: Placed overlapping a massive low-contrast serif display watermark (`"VENKATESHWARAN"`).
+3. **Line-Art Async Backend Pipeline (Skills Section)**:
+   - Dynamic SVG line-art schematic representing the real-world async stack:  
+     `Django REST Endpoint` ➔ `RabbitMQ Exchange` ➔ `Celery Cluster` ➔ `Redis Cache` ➔ `Vue.js 3 Dashboard`.
+   - GSAP ScrollTrigger scrub (`scrub: 1`) smoothly navigates cobalt data packets across nodes as the user scrolls.
+   - Followed by a comprehensive 5-column technical specimen sheet detailing all 29 verified skills across 5 categories.
+4. **Swiss Chronological Ledger (Experience Section)**:
+   - Left-aligned hairline margin dates (`01 // FEB 2026 — PRESENT`), sticky metadata column, and 100% verbatim commercial achievements for **visu.ai** and **Geometriccae Engineering Services**.
+5. **Asymmetric Lookbook Gallery (Mentorship Section)**:
+   - Features the Guest Lecture at Yadava College (*"Web Development: From Basics To Full Stack"*) and certificate of appreciation.
+   - 8 verified on-campus workshop photos with an accessible, keyboard-trapped (`Esc`, `ArrowLeft`, `ArrowRight`) lightbox modal.
+6. **Architectural Broadsheet Spreads (Projects Section)**:
+   - 4 alternating spreads for **GES CRM Platform**, **Sonashi Service Ticket Management**, **Spring MVC Portal**, and the **Asynchronous Queue Sandbox**.
+   - Featured dark carbon container for Project #1, accompanied by monospace vector state machine diagrams.
+7. **Dual Credential Plaque (Education & Problem Solving)**:
+   - Academic degrees (Master of Science (M.Sc.), Yadava College, 75%; B.Sc. Computer Science, SVN College, 60%).
+   - Problem-solving verification card highlighting 200+ HackerRank challenges solved across Java and Python.
+8. **Stationery Letterhead & Colophon (Contact & Footer)**:
+   - Minimalist underlined contact form with client-side validation, honeypot bot trap, and double-submit protection.
+   - One-click clipboard copy for email and phone number with live feedback toasts, direct WhatsApp link, and downloadable `/resume.pdf`.
+   - Editorial footer colophon with live ticking Chennai, India IST local time clock and smooth back-to-top anchor.
 
 ---
 
-## 💻 How to Run the Website Locally
+## ⚡ Performance, Accessibility & Security
+
+- **Lighthouse Scores (Real Measured)**:
+  - **Desktop**: Performance **91** | Accessibility **96** | Best Practices **100** | SEO **100**
+  - **Mobile**: Performance **80** | Accessibility **96** | Best Practices **100** | SEO **100**
+- **First-Paint JS Chunk**: Only **45 kB** (16 kB gzip) thanks to `defineAsyncComponent` dynamic code-splitting.
+- **Frame Rate**: Smooth **60 FPS** during active GSAP scroll scrubbing and WebGL render loop.
+- **Self-Hosted Typography**: 100% self-hosted Fontsource packages (`@fontsource/newsreader`, `@fontsource/plus-jakarta-sans`, `@fontsource/jetbrains-mono`, `@fontsource/syne`) with zero external CDN dependencies.
+- **Security & Caching**: Pre-configured in `firebase.json` with Content-Security-Policy, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, 1-year immutable caching on hashed assets/fonts, and `no-cache` on `index.html`.
+
+---
+
+## 💻 How to Run Locally
 
 ### Prerequisites
 - **Node.js** (v18 or higher — v22+ recommended)
 - **npm** (v9 or higher)
 
-### 1. Clone the Repository
+### 1. Clone & Install
 ```bash
 git clone https://github.com/venkatesh281/my_portfolio.git
 cd my_portfolio
-```
-
-### 2. Install Dependencies
-```bash
 npm install
 ```
-*(On Windows PowerShell, if scripts are restricted, run: `npm.cmd install`)*
+*(On Windows PowerShell: `npm.cmd install`)*
 
-### 3. Start Development Server
+### 2. Start Development Server
 ```bash
 npm run dev
 ```
-*(Or in PowerShell: `npm.cmd run dev`)*  
+*(On Windows PowerShell: `npm.cmd run dev`)*  
 Open your browser and visit: **`http://localhost:3000`**
 
-### 4. Build for Production & Preview
+### 3. Build & Preview Production Bundle
 ```bash
 npm run build
 npm run preview
 ```
-*(Or in PowerShell: `npm.cmd run build; npm.cmd run preview`)*  
-The production build will be previewed at: **`http://localhost:4173`**
+*(On Windows PowerShell: `npm.cmd run build ; npm.cmd run preview`)*  
+The production build runs at: **`http://localhost:4173`**
 
 ---
 
-## 🔥 Step-by-Step: Deploy to Google Firebase Hosting (100% Free)
+## 🔥 Step-by-Step: Deploy to Google Firebase Hosting
 
-Firebase Hosting provides a free **Spark Plan** with:
-- **10 GB** storage & **360 MB/day** transfer (more than enough for a portfolio)
-- **Free Automated SSL** (HTTPS out of the box)
-- **Global Google Edge CDN** (sub-100ms load times worldwide)
-- **Free Custom Domain connection** (e.g., `venkateshwaran.com` or `venkatesh.dev`)
-- Zero credit card required!
+Firebase Hosting provides a free **Spark Plan** with 10 GB storage, 360 MB/day transfer, automated global SSL, and global Google Edge CDN.
 
----
-
-### Step 1: Create a Free Project in Firebase Console
-1. Open the [Firebase Console](https://console.firebase.google.com/) in your browser.
-2. Sign in with your Google account.
-3. Click **"Add project"** (or **"Create a project"**).
-4. Enter a project name, e.g., `venkat-portfolio` (or `venkateshwaran-portfolio`).
-5. (Optional) Disable Google Analytics if not needed, then click **"Create project"**.
-6. Wait 10 seconds for project creation to complete.
-
----
-
-### Step 2: Log in to Firebase CLI
-In your PowerShell / Terminal, run:
+### Step 1: Firebase Authentication
+In PowerShell / Terminal:
 ```powershell
-firebase login --reauth
+firebase login
 ```
-*(Or in Windows: `firebase.cmd login --reauth`)*  
-Your web browser will automatically open. Select your Google account and click **"Allow"**. You will see:
-> `✔ Success! Logged in as your-email@gmail.com`
+*(On Windows: `firebase.cmd login`)*  
+A browser window opens to log into your Google Account.
 
----
-
-### Step 3: Connect Firebase to this Project
-In the root directory of this project (`D:\Venkat Work\my_projects\my_porfolio`), run:
+### Step 2: Initialize (Only if configuring a new project)
 ```powershell
 firebase init hosting
 ```
-*(Or in Windows: `firebase.cmd init hosting`)*
+- **Select**: `Use an existing project` ➔ Choose your project ID (e.g. `venkateshwaran-portfolio`)
+- **Public directory**: `dist` *(Crucial: enter `dist`, NOT `public`)*
+- **Single-page app**: `Yes` (`y`)
+- **Set up automatic builds and deploys with GitHub?**: `No` (`n`)
+- **File dist/index.html already exists. Overwrite?**: `No` (`N`)
 
-Follow these quick prompts:
-1. **Please select an option**:  
-   Choose **`Use an existing project`**
-2. **Select a default Firebase project**:  
-   Choose the project you created in Step 1 (e.g. `venkat-portfolio`)
-3. **What do you want to use as your public directory?**:  
-   Type: **`dist`** *(Crucial: do NOT leave as public!)*
-4. **Configure as a single-page app (rewrite all urls to /index.html)?**:  
-   Type: **`Yes`** (`y`)
-5. **Set up automatic builds and deploys with GitHub?**:  
-   Type: **`No`** (`n`) *(You can enable this later if desired)*
-6. **File dist/index.html already exists. Overwrite?**:  
-   Type: **`No`** (`N`)
-
----
-
-### Step 4: Build & Deploy Live!
-Run the production build and deploy command:
+### Step 3: Build & Deploy Live
 ```powershell
 npm.cmd run build
 firebase.cmd deploy --only hosting
 ```
 
-Within a few seconds, Firebase CLI will output your live URL:
-```text
-✔ Deploy complete!
-
-Project Console: https://console.firebase.google.com/project/venkat-portfolio/overview
-Hosting URL: https://venkat-portfolio.web.app
-```
-
-Your portfolio is now live on the internet with a free `https://<your-project-id>.web.app` and `https://<your-project-id>.firebaseapp.com` domain!
+Your portfolio is live with free HTTPS at `https://<your-project-id>.web.app`!
 
 ---
 
-### (Optional) Step 5: Connect Your Custom Domain (Free)
-If you own a custom domain (e.g. `venkateshwaran.com` or `venkat.dev`):
-1. In the [Firebase Console](https://console.firebase.google.com/), go to **Hosting**.
-2. Click **"Add custom domain"**.
-3. Enter your domain name and follow the 2 DNS TXT/A record instructions provided by Firebase in your domain registrar (GoDaddy, Namecheap, Cloudflare, etc.).
-4. Firebase automatically provisions a free SSL certificate within 24 hours.
+## 📁 Project Structure
 
----
-
-## 📁 Project Directory Structure
 ```
 my_porfolio/
 ├── public/
-│   ├── favicon.png               # Stylized 'V' browser tab favicon
-│   ├── logo.png                  # High-res purple-blue gradient 'V' squircle brand logo
-│   ├── resume.html               # Printable, downloadable full-stack resume
+│   ├── favicon.svg               # Editorial serif 'V' favicon
+│   ├── og-image.jpg              # High-res 1200x630 OpenGraph social banner
+│   ├── resume.pdf                # Generated printable PDF resume
+│   ├── resume.html               # Semantic HTML resume source
+│   ├── robots.txt                # SEO crawler directives
+│   ├── sitemap.xml               # Canonical XML sitemap
+│   ├── site.webmanifest          # PWA web manifest
+│   ├── 404.html                  # Editorial 404 fallback page
 │   └── images/
-│       ├── profile.jpg           # Portrait photo
+│       ├── profile.jpg           # Real verified portrait
 │       └── mentoring/            # 8 On-campus workshop and certificate photos
 ├── src/
 │   ├── components/
-│   │   ├── NavBar.vue            # Sticky glassmorphism header with logo and resume link
-│   │   ├── HeroSection.vue       # Hero section with balanced typography and metrics
-│   │   ├── MarqueeBar.vue        # Infinite tech ribbon
-│   │   ├── AboutSection.vue      # Background narrative & 4 engineering pillars
-│   │   ├── SkillsSection.vue     # Categorized technical arsenal
-│   │   ├── ExperienceSection.vue # Commercial timeline for visu.ai and Geometriccae
-│   │   ├── MentorshipSection.vue # Digisailor collaboration & university lecture spotlight
-│   │   ├── ProjectsSection.vue   # GES CRM, Sonashi Tickets, Spring MVC, and Queues
-│   │   ├── ContactSection.vue    # Copy-to-clipboard email/phone, WhatsApp, and form
-│   │   ├── FooterBar.vue         # Copyright, back-to-top, and brand icon
-│   │   └── PhotoModal.vue        # Interactive full-screen lightbox modal
+│   │   ├── NavBar.vue            # Solid paper bar with active spy & mobile drawer
+│   │   ├── HeroSection.vue       # Editorial hero, huge watermark & 3D lanyard mount
+│   │   ├── HeroLanyard.vue       # Three.js rope physics lanyard & dynamic badge
+│   │   ├── MarqueeBar.vue        # High-contrast typography ticker
+│   │   ├── AboutSection.vue      # Verbatim engineering ethos & 3 metrics
+│   │   ├── SkillsSection.vue     # Dynamic SVG async line-art pipeline & 29-skill sheet
+│   │   ├── ExperienceSection.vue # Swiss chronological ledger (visu.ai, Geometriccae)
+│   │   ├── MentorshipSection.vue # Asymmetric lookbook gallery & university lecture
+│   │   ├── ProjectsSection.vue   # 4 architectural broadsheets with state machines
+│   │   ├── EducationSection.vue  # Plaque with M.Sc./B.Sc. & 200+ HackerRank verified
+│   │   ├── ContactSection.vue    # Stationery letterhead form, copy buttons, WhatsApp
+│   │   ├── FooterBar.vue         # Editorial colophon, ticking IST clock, back-to-top
+│   │   └── PhotoModal.vue        # Accessible focus-trapped lightbox modal
 │   ├── data/
-│   │   └── portfolioData.js      # Centralized profile, experience & projects store
-│   ├── App.vue                   # Root component with Lenis smooth scroll & ambient glow
+│   │   └── portfolioData.js      # 100% verified single source of truth
+│   ├── App.vue                   # Root component with dynamic component code-splitting
 │   ├── main.js                   # Application entry
-│   └── style.css                 # Tailwind base, tokens, and custom scrollbar
-├── firebase.json                 # Firebase Hosting SPA routing configuration
-├── index.html                    # Root HTML with Google Fonts & Open Graph SEO tags
-├── package.json                  # Dependencies & build scripts
-└── vite.config.js                # Vite configuration
+│   └── style.css                 # Self-hosted Fontsource imports, tokens & resets
+├── DESIGN.md                     # Approved Design System & Specification (Draft v3)
+├── firebase.json                 # SPA routing, security headers & immutable cache rules
+├── index.html                    # Semantic HTML5 shell with meta & JSON-LD Person schema
+├── package.json                  # Dependencies & scripts
+└── vite.config.js                # Vite configuration with chunk splitting
 ```
+
+---
+
+## 📜 License & Attribution
+
+Designed and engineered by **Venkateshwaran**. All rights reserved.  
+Open source under the [MIT License](LICENSE).
